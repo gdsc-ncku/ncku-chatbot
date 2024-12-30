@@ -1,6 +1,12 @@
 # use app routers
 from fastapi import FastAPI
-from app.routers import chat, linebot
+from app.routers import linebot
+from app import webhooks  # 導入 handlers
+from app.db.database import engine
+from app.models import user
+
+# 創建數據庫表
+user.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
@@ -8,5 +14,4 @@ app = FastAPI()
 def read_root():
     return {"message": "Hello World"}
 
-app.include_router(chat.router)
 app.include_router(linebot.router)

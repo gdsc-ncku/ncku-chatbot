@@ -3,3 +3,6 @@
 
 # pycache
 __pycache__
+
+# db
+sql_app.db
