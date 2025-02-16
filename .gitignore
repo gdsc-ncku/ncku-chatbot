@@ -1,0 +1,12 @@
+.env
+.venv
+
+# pycache
+__pycache__
+
+# db
+sql_app.db
+
+# credential
+credentials.json
+token.json
