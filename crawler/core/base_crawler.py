@@ -66,6 +66,7 @@ class BaseCrawler:
     def inspect_path(self):
         return inspect_path(self)
 
+    @auto_backend_wrapper
     def run(self):
         raise NotImplementedError
 

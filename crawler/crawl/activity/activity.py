@@ -14,7 +14,7 @@ act_re_patten = r'act_(\d+)'
 
 tab_dict = {"tabs-1": "活動資訊",
             "tabs-2": "活動簡介",
-            "tabs-3": "活動海報", }
+            "tabs-3": "活動海報",}
 
 class ActivityCrawler(SeleniumCrawler):
     def __init__(self, url, url_path, end_str, max_worker=None, headless=True):
@@ -83,7 +83,7 @@ class ActivityCrawler(SeleniumCrawler):
 
         # extract all activity id information
         act_dict = {}
-        for act_id in tqdm(act_ids[:]):
+        for act_id in tqdm(act_ids[:10]):
             _url = f"{self.url}{self.url_path}"
             act_txt = self.extract_act_id(self.drivers[0], _url, act_id)
             if act_txt is not None and act_id not in act_dict:

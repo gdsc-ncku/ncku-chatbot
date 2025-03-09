@@ -27,7 +27,6 @@ class SeleniumCrawler(BaseCrawler):
 
     def __init_subclass__(self, **kwargs):
         super().__init_subclass__(**kwargs)
-        # 如果子類直接在定義中提供 run() 方法，
         if 'run' in self.__dict__:
             self.run = auto_build_wrapper(self.__dict__['run'])
 
@@ -46,6 +45,7 @@ class SeleniumCrawler(BaseCrawler):
             driver.quit()
         self.drivers = None
 
+    @auto_build_wrapper
     def run(self):
         raise NotImplementedError
 
