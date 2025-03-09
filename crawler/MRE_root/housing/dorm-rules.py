@@ -7,6 +7,7 @@ import requests
 from bs4 import BeautifulSoup
 from rich.progress import track
 
+
 def get_rule_urls(url: str) -> list[tuple[str, str]]:
     response = requests.get(url)
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -19,11 +20,13 @@ def get_rule_urls(url: str) -> list[tuple[str, str]]:
             result.append(('https://housing-osa.ncku.edu.tw' + a['href'], a.text.strip()))
     return result
 
+
 def pdf2markdown(url: str, title: str) -> str:
     # 使用 jina reader api 下載
     # 用法 https://r.jina.ai/{url}
     response = requests.get(f"https://r.jina.ai/{url}")
     return response.text
+
 
 def main():
     dorm_rules_url = "https://housing-osa.ncku.edu.tw/p/412-1052-2541.php?Lang=zh-tw"

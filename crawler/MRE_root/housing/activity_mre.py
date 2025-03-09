@@ -1,7 +1,6 @@
 """
-    purpose: 爬取成功大學活動報名網站的活動資訊(最小實作)
-"""
-
+     purpose: 爬取成功大學活動報名網站的活動資訊(最小實作)
+ """
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -18,7 +17,7 @@ TIMEOUT = 10
 
 tab_dict = {"tabs-1": "活動資訊",
             "tabs-2": "活動簡介",
-            "tabs-3": "活動海報",}
+            "tabs-3": "活動海報", }
 
 END_STR = '=END='
 
@@ -26,6 +25,7 @@ chrome_options = Options()
 chrome_options.page_load_strategy = 'eager'
 driver = webdriver.Chrome(options=chrome_options)
 wait = WebDriverWait(driver, timeout=TIMEOUT)
+
 
 def check_act_id(_driver, _wait):
     _driver.get(URL)
@@ -104,6 +104,7 @@ def core(num):
     results = '\n'.join(results)
     return results
 
+
 def main(_driver=driver, _wait=wait):
     elements = check_act_id(_driver, _wait)
     extracted_numbers = extract_act_id(elements)
@@ -119,10 +120,6 @@ def main(_driver=driver, _wait=wait):
 
     driver.quit()
 
+
 if __name__ == "__main__":
     main()
-
-
-
-
-

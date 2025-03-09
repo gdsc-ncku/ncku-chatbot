@@ -42,7 +42,7 @@ if __name__ == '__main__':
             continue
 
         # 一般的網站
-        if len(item['sub_items']) == 0: 
+        if len(item['sub_items']) == 0:
             print(f'正在爬取 {item["name"]}')
             url = item['url'].strip()
             response = requests.get(url)
@@ -55,7 +55,7 @@ if __name__ == '__main__':
             output_file = OUTPUT_DIR / f'{item["name"].replace(" ", "_").strip()}.md'
             output_file.write_text(md_text + '\n\n' + data_text)
             continue
-        
+
         # 有子項目的網站
         for sub_item in item['sub_items'].values():
             print(f'正在爬取 {sub_item["name"]}')
