@@ -48,7 +48,7 @@ class SeleniumCrawler(BaseCrawler):
     def wait_until(wait, condition):
         return wait.until(condition)
 
-    def get_attribute_str(self, tbody, results):
+    def get_tbody_str(self, tbody, results):
         attribute = tbody.get_attribute('innerHTML')
         return super().get_attribute_str(attribute, results)
 

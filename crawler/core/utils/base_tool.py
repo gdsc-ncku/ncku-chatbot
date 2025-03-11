@@ -10,9 +10,9 @@ import time
 def auto_backend_wrapper(func):
     @functools.wraps(func)
     def wrapper(self, *args, **kwargs):
-        start = time.time()
+        start = time.perf_counter()
         result = func(self, *args, **kwargs)
-        print(f"Thead Time: {time.time() - start:.2f} sec")
+        print(f"Thead Time: {time.perf_counter() - start:.2f} sec")
         if hasattr(self, "save") and callable(getattr(self, "save")):
             self.save(result)
         if hasattr(self, "quit") and callable(getattr(self, "quit")):

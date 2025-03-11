@@ -68,7 +68,7 @@ class ActivityCrawler(SeleniumCrawler):
         for tab_pane in tab_panes:
             tab_id = tab_pane.get_attribute("id")
             txt_list.append((f"## {tab_dict[tab_id]}:"))
-            txt_list = self.get_attribute_str(tab_pane, txt_list)
+            txt_list = self.get_tbody_str(tab_pane, txt_list)
 
         return txt_list
 
