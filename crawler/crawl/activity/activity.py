@@ -6,15 +6,15 @@ from tqdm import tqdm
 import re
 
 from crawler.core import SeleniumCrawler, get_all_str
+from crawler.utils import read_local_config
 
+config = read_local_config(format="json")
 
-table_condition = 'img[src="images/table.png"]'
-act_conditions = '//*[starts-with(@id, "act_") and descendant::span[starts-with(@onclick, "look_act(")]]'
-act_re_patten = r'act_(\d+)'
+table_condition = config["table_condition"]
+act_conditions = config["act_conditions"]
+act_re_patten = config["act_re_patten"]
+tab_dict = config["tab_dict"]
 
-tab_dict = {"tabs-1": "活動資訊",
-            "tabs-2": "活動簡介",
-            "tabs-3": "活動海報",}
 
 class ActivityCrawler(SeleniumCrawler):
     def __init__(self, url, url_path, end_str, max_worker=None, headless=True):
@@ -49,12 +49,11 @@ class ActivityCrawler(SeleniumCrawler):
         return act_ids
 
     @staticmethod
-    def extract_act_id(driver, url, act_id):
+    def extract_act_id(driver, act_id, url):
         """
         Extract activity id information
         """
-
-        driver.get(f"{url}{act_id}") #f"{URL}{PATH}{act_id}"
+        driver.get(f"{url}{act_id}")
 
         txt_list = [f"# 活動ID: {act_id}"]
 
@@ -82,13 +81,16 @@ class ActivityCrawler(SeleniumCrawler):
         act_ids = self.check_all_activity_id() # get all activity id
 
         # extract all activity id information
-        act_dict = {}
-        for act_id in tqdm(act_ids[:]):
-            _url = f"{self.url}{self.url_path}"
-            act_txt = self.extract_act_id(self.drivers[0], _url, act_id)
-            if act_txt is not None and act_id not in act_dict:
-                act_dict[act_id] = act_txt
 
+        self._url = f"{self.url}{self.url_path}"
+        # 原生for loop
+        #act_dict = {}
+        #for act_id in tqdm(act_ids[:]):
+        #    act_txt = self.extract_act_id(self.drivers[0], self._url, act_id)
+        #    if act_txt is not None and act_id not in act_dict:
+        #        act_dict[act_id] = act_txt
+
+        # 使用自動多線程
+        act_dict = self.task_loop(self.extract_act_id, act_ids, self._url)
         return act_dict
-
 

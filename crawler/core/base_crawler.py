@@ -3,12 +3,14 @@ import os
 import json
 
 from crawler.utils import inspect_path, makedirs, get_path
-from crawler.config import PROJECT_ROOT
 from crawler.core.utils import auto_backend_wrapper
+from crawler.utils import read_local_config
 
-TIMEOUT = 10
-JSON_DIR = "save"
-TXT_DIR = "output"
+config = read_local_config(format="yaml")
+TIMEOUT = config["timeout"]
+JSON_DIR = config["json_dir"]
+TXT_DIR = config["txt_dir"]
+
 
 class BaseCrawler:
     def __init__(self, url, url_path, end_str, num_worker=None):
@@ -27,39 +29,39 @@ class BaseCrawler:
             self.run = auto_backend_wrapper(self.__dict__['run'])
 
     def save(self, result):
-        folder, file_name = self.inspect_path()
+        project_root, folder, file_name = self.inspect_path()
 
         if isinstance(result, dict):
-            self.save_json(result, folder, file_name)
+            self.save_json(result, project_root, folder, file_name)
             self.output(result)
 
         elif isinstance(result, str):
-            self.save_txt(result, folder, file_name)
+            self.save_txt(result, project_root, folder, file_name)
 
         else:
             raise ValueError("result should be dict or str")
 
-    def save_json(self, result, folder, file_name):
-        save_path = makedirs(PROJECT_ROOT, JSON_DIR, folder)
+    def save_json(self, result, project_root, folder, file_name):
+        save_path = makedirs(project_root, JSON_DIR, folder)
         with open(get_path(save_path, f"{file_name}_result.json"),
                   "w", encoding="utf-8") as js:
 
             json.dump(result, js, ensure_ascii=False, indent=4)
 
-    def save_txt(self, result, folder, file_name):
-        save_path = makedirs(PROJECT_ROOT, TXT_DIR, folder)
+    def save_txt(self, result, project_root, folder, file_name):
+        save_path = makedirs(project_root, TXT_DIR, folder)
         with open(get_path(save_path, f"{file_name}_result.txt"),
                   "w", encoding="UTF-8") as txt:
 
             txt.write('\n'.join(result))
 
     def output(self, result=None):
-        folder, file_name = self.inspect_path()
+        project_root, folder, file_name = self.inspect_path()
         if result is None:
             pass
         elif isinstance(result, dict):
-            result = ["\n".join(v) + f"\n{self.end_str}\n" for v in result.values()]
-            self.save_txt(result, folder, file_name)
+            result = ["\n".join(v) + f"\n{self.end_str}\n" for v in result.values() if v is not None]
+            self.save_txt(result, project_root, folder, file_name)
         else:
             raise ValueError("result should be dict")
 

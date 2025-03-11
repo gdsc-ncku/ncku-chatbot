@@ -1,0 +1,12 @@
+{
+  "table_condition": "img[src=\"images/table.png\"]",
+  "act_conditions": "//*[starts-with(@id, \"act_\") and descendant::span[starts-with(@onclick, \"look_act\")]]",
+
+  "act_re_patten": "act_(\\d+)",
+
+  "tab_dict": {
+    "tabs-1": "活動詳情",
+    "tabs-2": "活動簡介",
+    "tabs-3": "活動海報"
+  }
+}

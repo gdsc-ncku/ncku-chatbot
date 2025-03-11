@@ -5,4 +5,4 @@ if __name__ == "__main__":
     PATH = "index.php?c=apply&no="
     END_STR = '=END='
 
-    activity_crawler(URL, PATH, END_STR, headless=False)
+    activity_crawler(URL, PATH, END_STR, max_worker=0, headless=False)

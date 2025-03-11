@@ -6,9 +6,14 @@ from selenium.webdriver.chrome.options import Options
 
 from crawler.utils import async_run
 from crawler.core.base_crawler import BaseCrawler
-from crawler.core.utils import async_build_drivers, build_drivers, get_all_str, auto_build_wrapper
+from crawler.core.utils import (async_build_drivers, build_drivers, get_all_str,
+                                auto_build_wrapper, thread_core, single_core)
 
-page_load_strategy = 'eager'
+from crawler.utils import read_local_config
+
+config = read_local_config(format="yaml")
+page_load_strategy = config["page_load_strategy"]
+
 
 
 class SeleniumCrawler(BaseCrawler):
@@ -41,6 +46,9 @@ class SeleniumCrawler(BaseCrawler):
         return wait.until(condition)
 
     def quit(self):
+        if self.drivers is None:
+            return
+
         for driver in self.drivers:
             driver.quit()
         self.drivers = None
@@ -54,4 +62,13 @@ class SeleniumCrawler(BaseCrawler):
         檢查在save目錄中是否有已經爬取的數據
         """
         raise NotImplementedError
+
+    def task_loop(self, func, tasks, *args, **kwargs):
+        """
+        多線程任務
+        """
+        if self.use_mp:
+            return thread_core(self.drivers, func, tasks, *args, **kwargs)
+        else:
+            return single_core(self.drivers, func, tasks, *args, **kwargs)
 

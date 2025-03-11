@@ -1,11 +1,14 @@
 
-__all__ = ["async_build_drivers", "build_drivers", "get_all_str", "auto_build_wrapper"]
+__all__ = ["async_build_drivers", "build_drivers", "get_all_str", "auto_build_wrapper", "thread_core", "single_core"]
 
 from selenium import webdriver
 from bs4 import BeautifulSoup
+from tqdm import tqdm
 
+from concurrent.futures import ThreadPoolExecutor
 import functools
 import asyncio
+import queue
 import os
 
 
@@ -71,3 +74,49 @@ def auto_build_wrapper(func):
         return result
     return wrapper
 
+
+def thread_auto_derives(derives_queue, func, task, *args, **kwargs):
+    device = derives_queue.get()
+    try:
+        return task, func(device, task, *args, **kwargs)
+
+    finally:
+        derives_queue.put(device)
+
+def thread_core(derives, func, tasks, *args, **kwargs):
+    """
+    多線程任務
+    return dict: {task: result}
+    """
+
+    derives_queue = queue.Queue()
+    for d in derives:
+        derives_queue.put(d)
+
+    with ThreadPoolExecutor(max_workers=len(derives)) as executor:
+        futures = [
+            executor.submit(thread_auto_derives, derives_queue, func, task, *args, **kwargs)
+            for task in tasks
+        ]
+        output_dict = {}
+
+        for future in tqdm(futures, total=len(futures), desc=f"Processing tasks with {len(derives)} Threads"):
+            task, result = future.result()
+            if result is not None:
+                output_dict[task] = result
+
+        return output_dict
+
+def single_core(derives, func, tasks, *args, **kwargs):
+    """
+    單線程任務
+    return dict: {task: result}
+    """
+
+    output_dict = {}
+    for task in tqdm(tasks, desc=f"Processing tasks with Main Thread"):
+        result = func(derives[0], task, *args, **kwargs)
+        if result is not None:
+            output_dict[task] = result
+
+    return output_dict
