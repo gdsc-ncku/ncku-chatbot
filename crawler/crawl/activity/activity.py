@@ -8,6 +8,7 @@ import re
 from crawler.core import SeleniumCrawler, get_all_str
 from crawler.utils import read_local_config
 
+
 config = read_local_config(format="json")
 
 table_condition = config["table_condition"]

@@ -1,9 +1,12 @@
 
 import json
 import yaml
+
+
 import asyncio
 import inspect
 import os
+
 
 from crawler.config import PROJECT_ROOT, DEFAULT_CONFIG_FORMAT
 
@@ -22,7 +25,6 @@ def async_run(async_func, *args, **kwargs):
         # 同步環境：直接執行 coroutine，並回傳結果
         return asyncio.run(coroutine)
 
-
 def inspect_path(obj_or_cls=None, stack_level=1, return_folder_root=False):
     """
     接收一個對象或類別，返回該類別定義所在的檔案名稱
@@ -39,6 +41,18 @@ def inspect_path(obj_or_cls=None, stack_level=1, return_folder_root=False):
     folder = os.path.basename(folder) if not return_folder_root else folder
     file_name = os.path.basename(file_path).split('.')[0]
     return PROJECT_ROOT, folder, file_name
+
+def inspect_path(obj_or_cls=None, stack_level=1, return_folder_root=False):
+    if obj_or_cls is None:
+        caller_frame = inspect.stack()[stack_level]
+        file_path = caller_frame.filename
+
+    else:
+        cls = obj_or_cls if isinstance(obj_or_cls, type) else obj_or_cls.__class__
+        file_path = inspect.getfile(cls)
+
+    folder = os.path.dirname(file_path)
+    folder = os.path.basename(folder) if not return_folder_root else folder
 
 def get_path(root, *args):
     """
