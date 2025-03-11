@@ -4,11 +4,15 @@ __all__ = ['auto_backend_wrapper', "get_all_attribute_words"]
 from bs4 import BeautifulSoup
 
 import functools
+import time
+
 
 def auto_backend_wrapper(func):
     @functools.wraps(func)
     def wrapper(self, *args, **kwargs):
+        start = time.time()
         result = func(self, *args, **kwargs)
+        print(f"Thead Time: {time.time() - start:.2f} sec")
         if hasattr(self, "save") and callable(getattr(self, "save")):
             self.save(result)
         if hasattr(self, "quit") and callable(getattr(self, "quit")):

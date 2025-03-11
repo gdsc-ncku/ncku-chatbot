@@ -4,7 +4,7 @@ __all__ = ["async_build_drivers", "async_quit_drivers", "build_drivers", "auto_b
 from selenium import webdriver
 from tqdm import tqdm
 
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import functools
 import asyncio
 import queue
@@ -23,18 +23,20 @@ async def async_build_drivers(options, num_worker):
             for _ in range(num_worker)
         ]
         drivers = await asyncio.gather(*tasks)
+        executor.shutdown(wait=True)
     return drivers
 
 
 async def async_quit_drivers(drivers):
     loop = asyncio.get_running_loop()
-    from concurrent.futures import ThreadPoolExecutor
+
     with ThreadPoolExecutor(max_workers=min(len(drivers), os.cpu_count())) as executor:
         tasks = [
             loop.run_in_executor(executor, lambda: driver.quit())
             for driver in drivers
         ]
         await asyncio.gather(*tasks)
+        executor.shutdown(wait=True)
 
 
 def build_drivers(options, num_worker=1):
@@ -85,13 +87,16 @@ def thread_core(derives, func, tasks, *args, **kwargs):
             executor.submit(thread_auto_derives, derives_queue, func, task, *args, **kwargs)
             for task in tasks
         ]
-        output_dict = {}
+        #executor.shutdown(False)
 
-        for future in tqdm(futures, total=len(futures), desc=f"Processing tasks with {len(derives)} Threads"):
+        output_dict = {}
+        qbar = tqdm(futures, total=len(futures), desc=f"Processing tasks with {len(derives)} Threads")
+        for future in qbar:
             task, result = future.result()
             if result is not None:
                 output_dict[task] = result
-
+        qbar.close()
+        executor.shutdown(cancel_futures=True)
         return output_dict
 
 
@@ -107,9 +112,11 @@ def single_core(derives, func, tasks, *args, **kwargs):
     """
 
     output_dict = {}
-    for task in tqdm(tasks, desc=f"Processing tasks with Main Thread"):
+    qbar = tqdm(tasks, desc=f"Processing tasks with Main Thread")
+    for task in qbar:
         result = func(derives[0], task, *args, **kwargs)
         if result is not None:
             output_dict[task] = result
 
+    qbar.close()
     return output_dict

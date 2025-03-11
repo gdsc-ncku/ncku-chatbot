@@ -25,6 +25,8 @@ class SeleniumCrawler(BaseCrawler):
         self.options.page_load_strategy = page_load_strategy
 
         self.options.add_argument('--log-level=1')
+        self.options.add_argument('--no-sandbox')  # 增加穩定性
+        self.options.add_argument('--disable-dev-shm-usage')  # 避免記憶體問題
         if headless:
             self.options.add_argument("--headless")
             self.options.add_argument('--log-level=3')
@@ -76,6 +78,7 @@ class SeleniumCrawler(BaseCrawler):
         多線程任務
         """
         if self.use_mp:
+            #thread_core(self.drivers, func, tasks, *args, **kwargs)
             return thread_core(self.drivers, func, tasks, *args, **kwargs)
         else:
             return single_core(self.drivers, func, tasks, *args, **kwargs)

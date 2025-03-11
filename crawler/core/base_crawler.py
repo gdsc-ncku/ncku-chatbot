@@ -29,11 +29,8 @@ class BaseCrawler:
 
     def save(self, result):
         project_root, folder, file_name = self.inspect_path()
-        print('1')
         if isinstance(result, dict):
-            print('2')
             self.save_json(result, project_root, folder, file_name)
-            print('2b')
             self.output(result)
 
         elif isinstance(result, str):
@@ -41,7 +38,6 @@ class BaseCrawler:
 
         else:
             raise ValueError("result should be dict or str")
-        print('3')
 
     @staticmethod
     def save_json(result, project_root, folder, file_name):
