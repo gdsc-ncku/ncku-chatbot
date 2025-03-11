@@ -83,15 +83,14 @@ class ActivityCrawler(SeleniumCrawler):
 
         # extract all activity id information
 
-        self._url = f"{self.url}{self.url_path}"
+        act_url = f"{self.url}{self.url_path}"
         # 原生for loop
         #act_dict = {}
         #for act_id in tqdm(act_ids[:]):
-        #    act_txt = self.extract_act_id(self.drivers[0], self._url, act_id)
+        #    act_txt = self.extract_act_id(self.drivers[0], act_id, self._url)
         #    if act_txt is not None and act_id not in act_dict:
         #        act_dict[act_id] = act_txt
 
         # 使用自動多線程
-        act_dict = self.task_loop(self.extract_act_id, act_ids, self._url)
+        act_dict = self.task_loop(self.extract_act_id, act_ids, act_url)
         return act_dict
-
