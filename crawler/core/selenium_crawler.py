@@ -1,13 +1,14 @@
 
 
-__all__ = ["SeleniumCrawler", "get_all_str", ]
+__all__ = ["SeleniumCrawler"]
 
 from selenium.webdriver.chrome.options import Options
 
 from crawler.utils import async_run
 from crawler.core.base_crawler import BaseCrawler
-from crawler.core.utils import (async_build_drivers, build_drivers, get_all_str,
-                                auto_build_wrapper, thread_core, single_core)
+from crawler.core.utils import (async_build_drivers, async_quit_drivers,
+                                build_drivers, auto_build_wrapper,
+                                thread_core, single_core)
 
 from crawler.utils import read_local_config
 
@@ -45,12 +46,19 @@ class SeleniumCrawler(BaseCrawler):
     def wait_until(wait, condition):
         return wait.until(condition)
 
+    def get_attribute_str(self, tbody, results):
+        attribute = tbody.get_attribute('innerHTML')
+        return super().get_attribute_str(attribute, results)
+
     def quit(self):
         if self.drivers is None:
             return
+        if self.use_mp:
+            self.drivers = async_run(async_quit_drivers, self.drivers)
+        else:
+            for driver in self.drivers:
+                driver.quit()
 
-        for driver in self.drivers:
-            driver.quit()
         self.drivers = None
 
     @auto_build_wrapper

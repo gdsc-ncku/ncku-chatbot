@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from tqdm import tqdm
 import re
 
-from crawler.core import SeleniumCrawler, get_all_str
+from crawler.core import SeleniumCrawler
 from crawler.utils import read_local_config
 
 
@@ -49,8 +49,8 @@ class ActivityCrawler(SeleniumCrawler):
 
         return act_ids
 
-    @staticmethod
-    def extract_act_id(driver, act_id, url):
+
+    def extract_act_id(self, driver, act_id, url):
         """
         Extract activity id information
         """
@@ -69,7 +69,7 @@ class ActivityCrawler(SeleniumCrawler):
         for tab_pane in tab_panes:
             tab_id = tab_pane.get_attribute("id")
             txt_list.append((f"## {tab_dict[tab_id]}:"))
-            txt_list = get_all_str(tab_pane, txt_list)
+            txt_list = self.get_attribute_str(tab_pane, txt_list)
 
         return txt_list
 
@@ -82,7 +82,6 @@ class ActivityCrawler(SeleniumCrawler):
         act_ids = self.check_all_activity_id() # get all activity id
 
         # extract all activity id information
-
         act_url = f"{self.url}{self.url_path}"
         # 原生for loop
         #act_dict = {}

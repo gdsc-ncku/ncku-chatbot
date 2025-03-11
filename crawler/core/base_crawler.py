@@ -2,9 +2,8 @@
 import os
 import json
 
-from crawler.utils import inspect_path, makedirs, get_path
-from crawler.core.utils import auto_backend_wrapper
-from crawler.utils import read_local_config
+from crawler.utils import inspect_path, makedirs, get_path, read_local_config
+from crawler.core.utils import auto_backend_wrapper, get_all_attribute_words
 
 config = read_local_config(format="yaml")
 TIMEOUT = config["timeout"]
@@ -23,16 +22,18 @@ class BaseCrawler:
 
         self.use_mp = self.num_worker > 1
 
-    def __init_subclass__(self, **kwargs):
+    def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
-        if 'run' in self.__dict__:
-            self.run = auto_backend_wrapper(self.__dict__['run'])
+        if 'run' in cls.__dict__:
+            cls.run = auto_backend_wrapper(cls.__dict__['run'])
 
     def save(self, result):
         project_root, folder, file_name = self.inspect_path()
-
+        print('1')
         if isinstance(result, dict):
+            print('2')
             self.save_json(result, project_root, folder, file_name)
+            print('2b')
             self.output(result)
 
         elif isinstance(result, str):
@@ -40,28 +41,33 @@ class BaseCrawler:
 
         else:
             raise ValueError("result should be dict or str")
+        print('3')
 
-    def save_json(self, result, project_root, folder, file_name):
+    @staticmethod
+    def save_json(result, project_root, folder, file_name):
         save_path = makedirs(project_root, JSON_DIR, folder)
         with open(get_path(save_path, f"{file_name}_result.json"),
                   "w", encoding="utf-8") as js:
-
             json.dump(result, js, ensure_ascii=False, indent=4)
 
-    def save_txt(self, result, project_root, folder, file_name):
+    @staticmethod
+    def save_txt(result, project_root, folder, file_name):
         save_path = makedirs(project_root, TXT_DIR, folder)
         with open(get_path(save_path, f"{file_name}_result.txt"),
                   "w", encoding="UTF-8") as txt:
-
             txt.write('\n'.join(result))
 
     def output(self, result=None):
         project_root, folder, file_name = self.inspect_path()
         if result is None:
+            ## TODO: 這裡要改
+            # result = load json
             pass
+
         elif isinstance(result, dict):
             result = ["\n".join(v) + f"\n{self.end_str}\n" for v in result.values() if v is not None]
             self.save_txt(result, project_root, folder, file_name)
+
         else:
             raise ValueError("result should be dict")
 
@@ -75,7 +81,5 @@ class BaseCrawler:
     def quit(self):
         raise NotImplementedError
 
-
-if __name__ == "__main__":
-    A = BaseCrawler("https://www.google.com", "search?q=", "end")
-    A.run()
+    def get_attribute_str(self, attribute, results):
+        return get_all_attribute_words(attribute, results)

@@ -1,8 +1,7 @@
 
-__all__ = ["async_build_drivers", "build_drivers", "get_all_str", "auto_build_wrapper", "thread_core", "single_core"]
+__all__ = ["async_build_drivers", "async_quit_drivers", "build_drivers", "auto_build_wrapper", "thread_core", "single_core"]
 
 from selenium import webdriver
-from bs4 import BeautifulSoup
 from tqdm import tqdm
 
 from concurrent.futures import ThreadPoolExecutor
@@ -13,6 +12,9 @@ import os
 
 
 async def async_build_drivers(options, num_worker):
+    """
+    創建多個driver(async)
+    """
     loop = asyncio.get_running_loop()
     from concurrent.futures import ThreadPoolExecutor
     with ThreadPoolExecutor(max_workers=min(num_worker, os.cpu_count())) as executor:
@@ -24,44 +26,23 @@ async def async_build_drivers(options, num_worker):
     return drivers
 
 
+async def async_quit_drivers(drivers):
+    loop = asyncio.get_running_loop()
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=min(len(drivers), os.cpu_count())) as executor:
+        tasks = [
+            loop.run_in_executor(executor, lambda: driver.quit())
+            for driver in drivers
+        ]
+        await asyncio.gather(*tasks)
+
+
 def build_drivers(options, num_worker=1):
+    """
+    創建多個driver(for loop)
+    """
     drivers = [webdriver.Chrome(options=options) for _ in range(max(num_worker, 1))]
     return drivers
-
-
-def get_all_str(tab_pane, results):
-    _results = results
-
-    html_content = tab_pane.get_attribute("innerHTML")
-    soup = BeautifulSoup(html_content, "html.parser")
-    for row in soup.find_all("tr"):
-        th = row.find("th")
-        td = row.find("td")
-
-        if th and td:
-            label = th.get_text(strip=True)
-            value = td.get_text(strip=True)
-            img_tag = td.find("img")
-
-            if img_tag and img_tag.has_attr("src"):
-                value = img_tag["src"]
-            else:
-                a_tag = td.find("a")
-                if a_tag and a_tag.has_attr("href"):
-                    value = a_tag["href"]
-
-            _results.append(f"\t{label}:\t{value}")
-        row.decompose()
-
-    for text in soup.stripped_strings:
-        _results.append((f"\t{text}"))
-
-    for img in soup.find_all("img"):
-        img_url = img.get("src")
-        _results.append((f"\t圖片連結:\t{img_url}"))
-
-    _results.append(("\n"))
-    return _results
 
 
 def auto_build_wrapper(func):
@@ -83,9 +64,15 @@ def thread_auto_derives(derives_queue, func, task, *args, **kwargs):
     finally:
         derives_queue.put(device)
 
+
 def thread_core(derives, func, tasks, *args, **kwargs):
     """
     多線程任務
+    derives: list of derives
+    tasks: list of tasks
+    *args: args
+    **kwargs: kwargs
+
     return dict: {task: result}
     """
 
@@ -107,9 +94,15 @@ def thread_core(derives, func, tasks, *args, **kwargs):
 
         return output_dict
 
+
 def single_core(derives, func, tasks, *args, **kwargs):
     """
     單線程任務
+    derives: list of derives
+    tasks: list of tasks
+    *args: args
+    **kwargs: kwargs
+
     return dict: {task: result}
     """
 
