@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "linebot"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+flask = "^3.1.0"
+line-bot-sdk = "^3.14.5"
+requests = "^2.32.3"
+openai = "^1.67.0"
+tiktoken = "^0.9.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
