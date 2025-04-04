@@ -4,7 +4,7 @@ import os
 import json
 
 client = OpenAI(api_key="api_key")
-filename = '行政手續摘要.json'
+filename = "行政手續摘要.json"
 
 # 預設網址
 base_url = "https://adms-acad.ncku.edu.tw/?Lang=zh-tw"
@@ -29,11 +29,11 @@ chat_completion = client.chat.completions.create(
             請使用**繁體中文**回應
             請把所以資訊列點出來
             不要反斜線和空白
-            可以附上連結在回應裡面"""
+            可以附上連結在回應裡面""",
         },
-        {"role": "user", "content": web_data}
+        {"role": "user", "content": web_data},
     ],
-    model="gpt-4o-mini"
+    model="gpt-4o-mini",
 )
 
 # 解析回應並格式化 JSON
@@ -45,7 +45,7 @@ except json.JSONDecodeError as e:
     print("JSON 格式錯誤：", e)
 else:
     if os.path.exists(filename):
-        with open(filename, 'r', encoding='utf-8') as f:
+        with open(filename, "r", encoding="utf-8") as f:
             try:
                 existing_data = json.load(f)
                 if isinstance(existing_data, list):
@@ -58,5 +58,5 @@ else:
     else:
         existing_data = [new_data]
 
-    with open(filename, 'w', encoding='utf-8') as f:
+    with open(filename, "w", encoding="utf-8") as f:
         json.dump(existing_data, f, ensure_ascii=False, indent=4)

@@ -10,13 +10,14 @@ def generate_content(client, web_data):
                 請使用**繁體中文**回應
                 請把所有資訊列點出來
                 不要反斜線和空白
-                **連結請務必保留並且一定要附上，包含下載連結**"""
+                **連結請務必保留並且一定要附上，包含下載連結**""",
             },
-            {"role": "user", "content": web_data}
+            {"role": "user", "content": web_data},
         ],
-        model="gpt-4o-mini"
+        model="gpt-4o-mini",
     )
     return chat_completion.choices[0].message.content.strip()
+
 
 def question_classifaier(client, web_data):
     chat_completion = client.chat.completions.create(
@@ -25,10 +26,10 @@ def question_classifaier(client, web_data):
                 "role": "system",
                 "content": """請幫助分辨以下內容是否屬於校園的行政手續問題:
                 如註冊、申請宿舍、學籍變更等。
-                **只要輸出True或False即可。**"""
+                **只要輸出True或False即可。**""",
             },
-            {"role": "user", "content": web_data}
+            {"role": "user", "content": web_data},
         ],
-        model="gpt-4o-mini"
+        model="gpt-4o-mini",
     )
     return chat_completion.choices[0].message.content.strip()

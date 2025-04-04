@@ -13,31 +13,33 @@ except requests.RequestException as e:
     print(f"Error fetching the URL: {e}")
     exit(1)
 
-response.encoding = 'UTF-8'
+response.encoding = "UTF-8"
 
 soup = BeautifulSoup(response.text, "html.parser")
+
 
 # Create a safe filename from the URL
 def create_safe_filename(url):
     # Parse the URL and get the path
     parsed_url = urllib.parse.urlparse(url)
-    
+
     # Remove protocol and replace non-alphanumeric characters with underscores
-    filename = re.sub(r'[^\w\-_\.]', '_', parsed_url.netloc + parsed_url.path)
-    
+    filename = re.sub(r"[^\w\-_\.]", "_", parsed_url.netloc + parsed_url.path)
+
     # Ensure the filename ends with .xml
-    if not filename.endswith('.xml'):
-        filename += '.xml'
-    
+    if not filename.endswith(".xml"):
+        filename += ".xml"
+
     return filename
 
+
 # Convert BeautifulSoup object to XML using xml.etree.ElementTree
-root = ET.Element('root')
+root = ET.Element("root")
 root.text = soup.prettify()
 
 # Create an ElementTree and write to file with the URL-derived filename
 filename = create_safe_filename(url)
 tree = ET.ElementTree(root)
-tree.write(filename, encoding='UTF-8', xml_declaration=True)
+tree.write(filename, encoding="UTF-8", xml_declaration=True)
 
 print(f"XML file saved as: {filename}")

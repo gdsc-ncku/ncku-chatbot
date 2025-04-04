@@ -19,11 +19,11 @@ chat_completion = client.chat.completions.create(
                         {"question": "問題1", "answer": "答案1"},
                         {"question": "問題2", "answer": "答案2"},
                         ]
-                    """
-        }, 
-        {"role": "user", "content": web_data}
+                    """,
+        },
+        {"role": "user", "content": web_data},
     ],
-    model="gpt-4o-mini"
+    model="gpt-4o-mini",
 )
 
 print(chat_completion.choices[0].message.content)

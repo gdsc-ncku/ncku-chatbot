@@ -10,8 +10,10 @@ user.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-@app.get("/")   
+
+@app.get("/")
 def read_root():
     return {"message": "Hello World"}
+
 
 app.include_router(linebot.router)

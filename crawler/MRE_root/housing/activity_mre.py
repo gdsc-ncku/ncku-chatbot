@@ -1,6 +1,6 @@
 """
-     purpose: 爬取成功大學活動報名網站的活動資訊(最小實作)
- """
+purpose: 爬取成功大學活動報名網站的活動資訊(最小實作)
+"""
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -15,14 +15,16 @@ URL = "https://activity.ncku.edu.tw/"
 PATH = "index.php?c=apply&no="
 TIMEOUT = 10
 
-tab_dict = {"tabs-1": "活動資訊",
-            "tabs-2": "活動簡介",
-            "tabs-3": "活動海報", }
+tab_dict = {
+    "tabs-1": "活動資訊",
+    "tabs-2": "活動簡介",
+    "tabs-3": "活動海報",
+}
 
-END_STR = '=END='
+END_STR = "=END="
 
 chrome_options = Options()
-chrome_options.page_load_strategy = 'eager'
+chrome_options.page_load_strategy = "eager"
 driver = webdriver.Chrome(options=chrome_options)
 wait = WebDriverWait(driver, timeout=TIMEOUT)
 
@@ -36,7 +38,10 @@ def check_act_id(_driver, _wait):
 
     _elements = wait.until(
         EC.presence_of_all_elements_located(
-            (By.XPATH, '//*[starts-with(@id, "act_") and descendant::span[starts-with(@onclick, "look_act(")]]')
+            (
+                By.XPATH,
+                '//*[starts-with(@id, "act_") and descendant::span[starts-with(@onclick, "look_act(")]]',
+            )
         )
     )
 
@@ -47,7 +52,7 @@ def extract_act_id(_elements):
     extracted_numbers = [
         match.group(1)
         for elem in _elements
-        if (match := re.search(r'act_(\d+)', elem.get_attribute("id")))
+        if (match := re.search(r"act_(\d+)", elem.get_attribute("id")))
     ]
 
     return extracted_numbers
@@ -101,7 +106,7 @@ def core(num):
         results.append(("\n"))
 
     results.append((f"\n{END_STR}\n"))
-    results = '\n'.join(results)
+    results = "\n".join(results)
     return results
 
 
@@ -116,7 +121,7 @@ def main(_driver=driver, _wait=wait):
             results.append(result)
 
     with open("act_results.txt", "w", encoding="UTF-8") as txt:
-        txt.write('\n'.join(results))
+        txt.write("\n".join(results))
 
     driver.quit()
 

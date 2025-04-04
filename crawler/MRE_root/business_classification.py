@@ -154,24 +154,24 @@ html_section = """
 
 def get_business_classification_dict(html: str) -> dict[str, str]:
     """用 beautiful soup 去取得名稱和連結的 dictionary"""
-    soup = BeautifulSoup(html, 'html.parser')
-    ul = soup.find('ul', id="ab2fba95161b0e343a47b098f22170dd3_MenuTop")
-    li_list = ul.find_all('li')
+    soup = BeautifulSoup(html, "html.parser")
+    ul = soup.find("ul", id="ab2fba95161b0e343a47b098f22170dd3_MenuTop")
+    li_list = ul.find_all("li")
     result = {}
     for li in li_list:
-        a = li.find('a')
-        result[a['title']] = a['href']
+        a = li.find("a")
+        result[a["title"]] = a["href"]
     return result
 
 
 def store_in_json(data: dict[str, str], path: Path) -> None:
     """將 dictionary 存入 JSON 文件"""
-    with open(path, 'w', encoding='utf-8') as f:
+    with open(path, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
 
 def get_markdown_from_url(url: str, api_key: str) -> str:
-    """從網址取得 markdown，使用 jina reader api，用法為 https://r.jina.ai/{target_url} """
+    """從網址取得 markdown，使用 jina reader api，用法為 https://r.jina.ai/{target_url}"""
     jina_url = f"https://r.jina.ai/https://housing-osa.ncku.edu.tw{url}"
     print(f"url: {url}")
     try:
@@ -186,7 +186,7 @@ def get_markdown_from_url(url: str, api_key: str) -> str:
 
 # 寫一個把 json 檔案中所有連結的用 jina reader api 轉換成 markdown，然後再用這個 json 的 key 當作檔案名稱，存到 data/zh/business_classification/ 底下
 def store_md_into_file(json_path: Path, md_path: Path) -> None:
-    with json_path.open('r', encoding='utf-8') as f:
+    with json_path.open("r", encoding="utf-8") as f:
         data = json.load(f)
     md_path.mkdir(parents=True, exist_ok=True)
 
@@ -196,15 +196,15 @@ def store_md_into_file(json_path: Path, md_path: Path) -> None:
         print("fetching: ", key)
         md = get_markdown_from_url(value, os.getenv("JINA_API_KEY"))
         # touch file
-        file_path = md_path / f'{key}.md'
+        file_path = md_path / f"{key}.md"
         file_path.touch(exist_ok=True)
-        file_path.write_text(md, encoding='utf-8')
+        file_path.write_text(md, encoding="utf-8")
         time.sleep(2)
 
 
 if __name__ == "__main__":
-    md_path = Path('data/zh/business_classification')
-    json_path = Path('data/zh/business_classification.json')
+    md_path = Path("data/zh/business_classification")
+    json_path = Path("data/zh/business_classification.json")
 
     # 先把業務分類存成 json
     store_in_json(get_business_classification_dict(html_section), json_path)

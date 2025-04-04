@@ -1,4 +1,3 @@
-
 import os
 import json
 
@@ -17,15 +16,18 @@ class BaseCrawler:
         self.url = url
         self.url_path = url_path
         self.end_str = end_str
-        self.num_worker = os.cpu_count() if num_worker == "auto" \
-                                         else (num_worker if num_worker else 0)
+        self.num_worker = (
+            os.cpu_count()
+            if num_worker == "auto"
+            else (num_worker if num_worker else 0)
+        )
 
         self.use_mp = self.num_worker > 1
 
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
-        if 'run' in cls.__dict__:
-            cls.run = auto_backend_wrapper(cls.__dict__['run'])
+        if "run" in cls.__dict__:
+            cls.run = auto_backend_wrapper(cls.__dict__["run"])
 
     def save(self, result):
         project_root, folder, file_name = self.inspect_path()
@@ -42,16 +44,18 @@ class BaseCrawler:
     @staticmethod
     def save_json(result, project_root, folder, file_name):
         save_path = makedirs(project_root, JSON_DIR, folder)
-        with open(get_path(save_path, f"{file_name}_result.json"),
-                  "w", encoding="utf-8") as js:
+        with open(
+            get_path(save_path, f"{file_name}_result.json"), "w", encoding="utf-8"
+        ) as js:
             json.dump(result, js, ensure_ascii=False, indent=4)
 
     @staticmethod
     def save_txt(result, project_root, folder, file_name):
         save_path = makedirs(project_root, TXT_DIR, folder)
-        with open(get_path(save_path, f"{file_name}_result.txt"),
-                  "w", encoding="UTF-8") as txt:
-            txt.write('\n'.join(result))
+        with open(
+            get_path(save_path, f"{file_name}_result.txt"), "w", encoding="UTF-8"
+        ) as txt:
+            txt.write("\n".join(result))
 
     def output(self, result=None):
         project_root, folder, file_name = self.inspect_path()
@@ -61,7 +65,11 @@ class BaseCrawler:
             pass
 
         elif isinstance(result, dict):
-            result = ["\n".join(v) + f"\n{self.end_str}\n" for v in result.values() if v is not None]
+            result = [
+                "\n".join(v) + f"\n{self.end_str}\n"
+                for v in result.values()
+                if v is not None
+            ]
             self.save_txt(result, project_root, folder, file_name)
 
         else:

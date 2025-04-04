@@ -7,11 +7,13 @@ import time
 
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
+
 def get_link(main_url):
     links = fetch_suburls(main_url)
     with open("urls.txt", "w") as f:
         for link in links:
             f.write(f"{link}\n")
+
 
 def jina():
     client = OpenAI()
@@ -35,11 +37,12 @@ def jina():
             print(f"Text file saved as: ./txt/{filename}.txt")
         else:
             print(f"Skipping URL: {url}", "classified as False")
-        
+
         time.sleep(3)
 
     # Clear the content of urls.txt after processing all URLs
     open("urls.txt", "w").close()
+
 
 if __name__ == "__main__":
     main_urlrls = ["https://assistance-osa.ncku.edu.tw/p/412-1051-2563.php?Lang=zh-tw"]
