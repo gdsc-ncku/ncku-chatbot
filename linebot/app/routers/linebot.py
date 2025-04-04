@@ -10,6 +10,7 @@ router = APIRouter(prefix="/linebot", tags=["linebot"])
 # 建立 MessageService 物件
 message_service = MessageService()
 
+
 # 註冊訊息處理函式
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
@@ -17,11 +18,13 @@ def handle_text_message(event):
     reply_message = message_service.handle_text_message(event)
     message_service.send_message(event.reply_token, [reply_message])
 
+
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image_message(event):
     print("收到圖片訊息")
     reply_message = message_service.handle_image_message(event)
     message_service.send_message(event.reply_token, [reply_message])
+
 
 @handler.add(MessageEvent, message=AudioMessage)
 def handle_audio_message(event):
