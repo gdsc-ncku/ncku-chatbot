@@ -4,12 +4,15 @@ import os
 
 load_dotenv()
 
-API_KEY = os.getenv("OPENAI_API_KEY")
-model = "gpt-4o-mini"
+model = "gemini-2.0-flash-001"
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
 
 def openai_api(messages):
-    client = OpenAI(api_key=API_KEY)
+    client = OpenAI(
+        api_key=GEMINI_API_KEY,
+        base_url="https://generativelanguage.googleapis.com/v1beta/openai",
+    )
     response = client.chat.completions.create(
         model=model, messages=messages, temperature=0.7
     )
