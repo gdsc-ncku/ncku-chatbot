@@ -15,8 +15,8 @@ message_service = MessageService()
 @handler.add(MessageEvent, message=TextMessage)
 def handle_text_message(event):
     print("收到文字訊息")
-    reply_message = message_service.handle_text_message(event)
-    message_service.send_message(event.reply_token, [reply_message])
+    reply_messages = message_service.handle_text_message(event)
+    message_service.send_message(event.reply_token, reply_messages)
 
 
 @handler.add(MessageEvent, message=ImageMessage)
