@@ -4,20 +4,20 @@ import os
 import json
 
 client = OpenAI(api_key="api_key")
-filename = '行政手續摘要.json'
+filename = "行政手續摘要.json"
 
 # 從 urls.txt 讀取 base_url
 main_urls = []
-with open('./web_crawler_urls.txt', 'r', encoding='utf-8') as file:
+with open("./web_crawler_urls.txt", "r", encoding="utf-8") as file:
     for line in file:
         url = line.strip().strip('"')
-        if url.startswith('http'):
+        if url.startswith("http"):
             main_urls.append(url)
 
 # 初始化 JSON 資料
 existing_data = []
 if os.path.exists(filename):
-    with open(filename, 'r', encoding='utf-8') as f:
+    with open(filename, "r", encoding="utf-8") as f:
         try:
             existing_data = json.load(f)
             if not isinstance(existing_data, list):
@@ -28,7 +28,7 @@ if os.path.exists(filename):
 # 對每個 URL 進行爬取和處理
 for base_url in main_urls:
     prefixed_url = f"https://r.jina.ai/{base_url}"
-    
+
     # 爬取網站內容
     try:
         response = requests.get(prefixed_url)
@@ -54,11 +54,11 @@ for base_url in main_urls:
                 請使用**繁體中文**回應
                 請把所有資訊列點出來
                 不要反斜線和空白
-                可以附上連結在回應裡面"""
+                可以附上連結在回應裡面""",
             },
-            {"role": "user", "content": web_data}
+            {"role": "user", "content": web_data},
         ],
-        model="gpt-4o-mini"
+        model="gpt-4o-mini",
     )
 
     # 解析回應並格式化 JSON
@@ -72,5 +72,5 @@ for base_url in main_urls:
         continue
 
 # 將所有結果寫入檔案
-with open(filename, 'w', encoding='utf-8') as f:
+with open(filename, "w", encoding="utf-8") as f:
     json.dump(existing_data, f, ensure_ascii=False, indent=4)
