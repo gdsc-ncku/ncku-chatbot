@@ -1,13 +1,14 @@
 """共用函式模組"""
 
 import logging
+import requests
 from linebot.models import (
     QuickReply,
     QuickReplyButton,
     MessageAction,
     SendMessage,
 )
-from ...config.line_config import line_bot_api
+from ...config.line_config import line_bot_api, LINE_CHANNEL_ACCESS_TOKEN
 
 logger = logging.getLogger(__name__)
 
@@ -31,6 +32,34 @@ def create_quick_reply() -> QuickReply:
             QuickReplyButton(action=MessageAction(label="設定", text="/setup")),
         ]
     )
+
+
+def show_loading_animation(user_id, duration=5):
+    """顯示 LINE Bot loading 動畫"""
+    try:
+        url = "https://api.line.me/v2/bot/chat/loading/start"
+        headers = {
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {LINE_CHANNEL_ACCESS_TOKEN}",
+        }
+        data = {
+            "chatId": user_id,
+            "loadingSeconds": min(max(duration, 5), 60),  # 確保在 5-60 秒範圍內
+        }
+        response = requests.post(url, headers=headers, json=data)
+        if response.status_code == 202:
+            logger.info(
+                f"已顯示 loading 動畫 (user_id: {user_id}, duration: {duration})"
+            )
+            return True
+        else:
+            logger.error(
+                f"顯示 loading 動畫失敗: {response.status_code} - {response.text}"
+            )
+            return False
+    except Exception as e:
+        logger.error(f"顯示 loading 動畫時發生錯誤: {str(e)}")
+        return False
 
 
 def send_message(reply_token: str, messages: list[SendMessage]) -> None:
