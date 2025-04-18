@@ -9,19 +9,19 @@ message_service = MessageService()
 # text message
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    reply_message = message_service.handle_text_message(event)
-    message_service.send_message(event.reply_token, [reply_message])
+    reply_messages = message_service.handle_text_message(event)
+    message_service.send_message(event.reply_token, reply_messages)
 
 
 # image message
 @handler.add(MessageEvent, message=ImageMessage)
 def handle_image_message(event):
-    reply_message = message_service.handle_image_message(event)
-    message_service.send_message(event.reply_token, [reply_message])
+    reply_messages = message_service.handle_image_message(event)
+    message_service.send_message(event.reply_token, reply_messages)
 
 
 # audio message
 @handler.add(MessageEvent, message=AudioMessage)
 def handle_audio_message(event):
-    reply_message = message_service.handle_audio_message(event)
-    message_service.send_message(event.reply_token, [reply_message])
+    reply_messages = message_service.handle_audio_message(event)
+    message_service.send_message(event.reply_token, reply_messages)
