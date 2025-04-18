@@ -1,6 +1,5 @@
 """共用函式模組"""
 
-import logging
 import requests
 from linebot.models import (
     QuickReply,
@@ -9,8 +8,10 @@ from linebot.models import (
     SendMessage,
 )
 from ...config.line_config import line_bot_api, LINE_CHANNEL_ACCESS_TOKEN
+from ...config.logger import get_logger
 
-logger = logging.getLogger(__name__)
+# 取得模組的日誌記錄器
+logger = get_logger(__name__)
 
 # 常用指令
 COMMANDS = {

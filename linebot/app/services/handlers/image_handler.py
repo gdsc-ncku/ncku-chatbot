@@ -1,13 +1,14 @@
 """處理圖片訊息的模組"""
 
 import os
-import logging
 from linebot.models import TextSendMessage
 from .common import create_quick_reply
 from ...api.vision import process_image
 from ...config.line_config import line_bot_api
+from ...config.logger import get_logger
 
-logger = logging.getLogger(__name__)
+# 取得模組的日誌記錄器
+logger = get_logger(__name__)
 
 
 def handle_image_message(event):
