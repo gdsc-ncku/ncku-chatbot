@@ -1,11 +1,13 @@
-import os
-import json
 import traceback
 from typing import Optional, Dict, Any, List
 
 # Import OpenAI API and image processing utilities
 from .utils.openai_api import openai_api
 from .utils.image_processing import encode_image
+from ..config.logger import get_logger
+
+# 取得模組的日誌記錄器
+logger = get_logger(__name__)
 
 
 def process_image(image_path: str, prompt: str = "圖片內容有什麼?") -> str:
@@ -48,5 +50,5 @@ def process_image(image_path: str, prompt: str = "圖片內容有什麼?") -> st
         return reply_msg
     except Exception as e:
         error_detail = f"未預期的錯誤: {str(e)}\n{traceback.format_exc()}"
-        print(error_detail)
+        logger.error(error_detail)
         return "處理圖片時發生錯誤，請稍後再試"

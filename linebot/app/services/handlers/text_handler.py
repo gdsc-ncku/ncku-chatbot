@@ -1,12 +1,13 @@
 """處理文字訊息的模組"""
 
 import json
-import logging
 from linebot.models import TextSendMessage, FlexSendMessage
 from .common import create_quick_reply, COMMANDS
 from ...api.dify import inference
+from ...config.logger import get_logger
 
-logger = logging.getLogger(__name__)
+# 取得模組的日誌記錄器
+logger = get_logger(__name__)
 
 
 def handle_text_message(event):
