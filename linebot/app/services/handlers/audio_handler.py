@@ -1,10 +1,11 @@
 """處理音訊訊息的模組"""
 
-import logging
 from linebot.models import TextSendMessage
 from .common import create_quick_reply
+from ...config.logger import get_logger
 
-logger = logging.getLogger(__name__)
+# 取得模組的日誌記錄器
+logger = get_logger(__name__)
 
 
 def handle_audio_message(event):

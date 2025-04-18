@@ -1,6 +1,5 @@
 """訊息服務模組 - 處理 LINE Bot 的各種訊息類型"""
 
-import logging
 from .handlers import (
     handle_text_message,
     handle_image_message,
@@ -8,8 +7,10 @@ from .handlers import (
     send_message,
     show_loading_animation,
 )
+from ..config.logger import get_logger
 
-logger = logging.getLogger(__name__)
+# 取得模組的日誌記錄器
+logger = get_logger(__name__)
 
 
 # 為了保持與舊版API相容，我們可以保留這個類別作為包裝器
