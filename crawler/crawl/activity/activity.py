@@ -1,4 +1,3 @@
-
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -30,24 +29,23 @@ class ActivityCrawler(SeleniumCrawler):
         driver.get(self.url)
         wait = WebDriverWait(driver, self.time_out)
 
-        table_elements = self.wait_until(wait,
-                                         EC.element_to_be_clickable((By.CSS_SELECTOR, table_condition))
-                                         )
+        table_elements = self.wait_until(
+            wait, EC.element_to_be_clickable((By.CSS_SELECTOR, table_condition))
+        )
 
         table_elements.click()
 
-        act_elements = self.wait_until(wait,
-                                       EC.presence_of_all_elements_located(
-                                           (By.XPATH, act_conditions))
-                                       )
+        act_elements = self.wait_until(
+            wait, EC.presence_of_all_elements_located((By.XPATH, act_conditions))
+        )
 
-        act_ids = [match.group(1)
-                  for elem in act_elements
-                  if (match := re.search(act_re_patten, elem.get_attribute("id")))
-                  ]
+        act_ids = [
+            match.group(1)
+            for elem in act_elements
+            if (match := re.search(act_re_patten, elem.get_attribute("id")))
+        ]
 
         return act_ids
-
 
     def extract_act_id(self, driver, act_id, url):
         """
@@ -78,13 +76,13 @@ class ActivityCrawler(SeleniumCrawler):
         return dict: 以Json格式自動儲存到 /save資料夾, 而且會自動整理格式再儲存到 /output資料夾
         return str: 以字串格式回傳自動儲存到 /output資料夾
         """
-        act_ids = self.check_all_activity_id() # get all activity id
+        act_ids = self.check_all_activity_id()  # get all activity id
 
         # extract all activity id information
         act_url = f"{self.url}{self.url_path}"
         # 原生for loop
-        #act_dict = {}
-        #for act_id in tqdm(act_ids[:]):
+        # act_dict = {}
+        # for act_id in tqdm(act_ids[:]):
         #    act_txt = self.extract_act_id(self.drivers[0], act_id, self._url)
         #    if act_txt is not None and act_id not in act_dict:
         #        act_dict[act_id] = act_txt

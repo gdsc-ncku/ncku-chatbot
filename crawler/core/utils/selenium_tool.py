@@ -1,5 +1,11 @@
-
-__all__ = ["async_build_drivers", "async_quit_drivers", "build_drivers", "auto_build_wrapper", "thread_core", "single_core"]
+__all__ = [
+    "async_build_drivers",
+    "async_quit_drivers",
+    "build_drivers",
+    "auto_build_wrapper",
+    "thread_core",
+    "single_core",
+]
 
 from selenium import webdriver
 from tqdm import tqdm
@@ -17,6 +23,7 @@ async def async_build_drivers(options, num_worker):
     """
     loop = asyncio.get_running_loop()
     from concurrent.futures import ThreadPoolExecutor
+
     with ThreadPoolExecutor(max_workers=min(num_worker, os.cpu_count())) as executor:
         tasks = [
             loop.run_in_executor(executor, lambda: webdriver.Chrome(options=options))
@@ -32,8 +39,7 @@ async def async_quit_drivers(drivers):
 
     with ThreadPoolExecutor(max_workers=min(len(drivers), os.cpu_count())) as executor:
         tasks = [
-            loop.run_in_executor(executor, lambda: driver.quit())
-            for driver in drivers
+            loop.run_in_executor(executor, lambda: driver.quit()) for driver in drivers
         ]
         await asyncio.gather(*tasks)
         executor.shutdown(wait=True)
@@ -55,6 +61,7 @@ def auto_build_wrapper(func):
 
         result = func(self, *args, **kwargs)
         return result
+
     return wrapper
 
 
@@ -84,13 +91,19 @@ def thread_core(derives, func, tasks, *args, **kwargs):
 
     with ThreadPoolExecutor(max_workers=len(derives)) as executor:
         futures = [
-            executor.submit(thread_auto_derives, derives_queue, func, task, *args, **kwargs)
+            executor.submit(
+                thread_auto_derives, derives_queue, func, task, *args, **kwargs
+            )
             for task in tasks
         ]
-        #executor.shutdown(False)
+        # executor.shutdown(False)
 
         output_dict = {}
-        qbar = tqdm(futures, total=len(futures), desc=f"Processing tasks with {len(derives)} Threads")
+        qbar = tqdm(
+            futures,
+            total=len(futures),
+            desc=f"Processing tasks with {len(derives)} Threads",
+        )
         for future in qbar:
             task, result = future.result()
             if result is not None:

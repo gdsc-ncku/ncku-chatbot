@@ -1,4 +1,3 @@
-
 import json
 import yaml
 
@@ -8,6 +7,7 @@ import inspect
 import os
 
 from crawler.config import PROJECT_ROOT, DEFAULT_CONFIG_FORMAT
+
 
 def async_run(async_func, *args, **kwargs):
     coroutine = async_func(*args, **kwargs)
@@ -24,6 +24,7 @@ def async_run(async_func, *args, **kwargs):
         # 同步環境：直接執行 coroutine，並回傳結果
         return asyncio.run(coroutine)
 
+
 def inspect_path(obj_or_cls=None, stack_level=1, return_folder_root=False):
     """
     接收一個對象或類別，返回該類別定義所在的檔案名稱
@@ -38,7 +39,7 @@ def inspect_path(obj_or_cls=None, stack_level=1, return_folder_root=False):
 
     folder = os.path.dirname(file_path)
     folder = os.path.basename(folder) if not return_folder_root else folder
-    file_name = os.path.basename(file_path).split('.')[0]
+    file_name = os.path.basename(file_path).split(".")[0]
 
     return PROJECT_ROOT, folder, file_name
 
@@ -49,12 +50,14 @@ def get_path(root, *args):
     """
     return os.path.join(root, *args)
 
+
 def check_path(root, *args):
     """
     檢查路徑是否存在
     """
     path = get_path(root, *args) if args else root
     return os.path.exists(path)
+
 
 def makedirs(root, *args):
     """
@@ -64,6 +67,7 @@ def makedirs(root, *args):
     if not check_path(path):
         os.makedirs(path)
     return path
+
 
 def read_local_config(format=DEFAULT_CONFIG_FORMAT, dir_name="cfg"):
     """
@@ -85,5 +89,3 @@ def read_local_config(format=DEFAULT_CONFIG_FORMAT, dir_name="cfg"):
     else:
         print(f"Local config not found at {path}")
         return {}
-
-

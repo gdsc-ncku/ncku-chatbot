@@ -1,5 +1,4 @@
-
-__all__ = ['auto_backend_wrapper', "get_all_attribute_words"]
+__all__ = ["auto_backend_wrapper", "get_all_attribute_words"]
 
 from bs4 import BeautifulSoup
 
@@ -18,7 +17,9 @@ def auto_backend_wrapper(func):
         if hasattr(self, "quit") and callable(getattr(self, "quit")):
             self.quit()
         return result
+
     return wrapper
+
 
 def get_all_attribute_words(tbody, results=[]):
     """
@@ -29,7 +30,7 @@ def get_all_attribute_words(tbody, results=[]):
     return list(str)
     """
 
-    #html_content = tbody.get_attribute("innerHTML")
+    # html_content = tbody.get_attribute("innerHTML")
 
     _results = results
     soup = BeautifulSoup(tbody, "html.parser")

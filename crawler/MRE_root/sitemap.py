@@ -4,7 +4,7 @@ import json
 import os
 
 
-def generate_sitemap(url, output_path='data/sitemap.json'):
+def generate_sitemap(url, output_path="data/sitemap.json"):
     """
     生成網站地圖並保存為JSON文件
 
@@ -40,34 +40,30 @@ def generate_sitemap(url, output_path='data/sitemap.json'):
 
         for link in links:
             text = link.text.strip()
-            link_url = link['href']
+            link_url = link["href"]
 
             # 檢查是否為主項目 (不含 '-')
-            if '-' not in text:
+            if "-" not in text:
                 # 取得項目編號和名稱
-                num = text.split('.')[0].strip()
-                name = text.split('.')[1].strip()
-                menu_dict[num] = {
-                    'name': name,
-                    'url': link_url,
-                    'sub_items': {}
-                }
+                num = text.split(".")[0].strip()
+                name = text.split(".")[1].strip()
+                menu_dict[num] = {"name": name, "url": link_url, "sub_items": {}}
                 current_main = num
             else:
                 # 處理子項目
                 if current_main:
-                    sub_num = text.split('.')[0].strip()
-                    sub_name = text.split('.')[1].strip()
-                    menu_dict[current_main]['sub_items'][sub_num] = {
-                        'name': sub_name,
-                        'url': link_url
+                    sub_num = text.split(".")[0].strip()
+                    sub_name = text.split(".")[1].strip()
+                    menu_dict[current_main]["sub_items"][sub_num] = {
+                        "name": sub_name,
+                        "url": link_url,
                     }
 
         # 確保輸出目錄存在
         os.makedirs(os.path.dirname(output_path), exist_ok=True)
 
         # 將結果寫入 JSON 文件
-        with open(output_path, 'w', encoding='utf-8') as f:
+        with open(output_path, "w", encoding="utf-8") as f:
             json.dump(menu_dict, f, ensure_ascii=False, indent=2)
         print(f"網站地圖已保存到 {output_path}")
 
@@ -78,8 +74,8 @@ def generate_sitemap(url, output_path='data/sitemap.json'):
         return None
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # # 目標網址
     target_url_zh = "https://housing-osa.ncku.edu.tw/p/17-1052.php?Lang=zh-tw"
     target_url_en = "https://housing-osa.ncku.edu.tw/p/17-1052.php?Lang=en"
-    generate_sitemap(target_url_zh, 'data/zh/sitemap.json')
+    generate_sitemap(target_url_zh, "data/zh/sitemap.json")
