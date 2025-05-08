@@ -1,0 +1,606 @@
+{
+    "data": [
+        {
+            "id": "d3fcb424-2901-4629-906c-52e21284b03e",
+            "name": "tmp",
+            "description": "useful for when you want to answer queries about the result.csv",
+            "provider": "vendor",
+            "permission": "all_team_members",
+            "data_source_type": "upload_file",
+            "indexing_technique": "high_quality",
+            "app_count": 0,
+            "document_count": 36,
+            "word_count": 14312,
+            "created_by": "0a9e9433-b240-49d8-8d30-cc88aebed0be",
+            "created_at": 1746447720,
+            "updated_by": "0a9e9433-b240-49d8-8d30-cc88aebed0be",
+            "updated_at": 1746447732,
+            "embedding_model": "voyage-multilingual-2",
+            "embedding_model_provider": "langgenius/voyage/voyage",
+            "embedding_available": true,
+            "retrieval_model_dict": {
+                "search_method": "hybrid_search",
+                "reranking_enable": true,
+                "reranking_mode": "weighted_score",
+                "reranking_model": {
+                    "reranking_provider_name": "langgenius/voyage/voyage",
+                    "reranking_model_name": "rerank-2"
+                },
+                "weights": {
+                    "weight_type": "customized",
+                    "keyword_setting": {
+                        "keyword_weight": 0.3
+                    },
+                    "vector_setting": {
+                        "vector_weight": 0.7,
+                        "embedding_model_name": "voyage-multilingual-2",
+                        "embedding_provider_name": "langgenius/voyage/voyage"
+                    }
+                },
+                "top_k": 10,
+                "score_threshold_enabled": false,
+                "score_threshold": 0.0
+            },
+            "tags": [],
+            "doc_form": "economy",
+            "external_knowledge_info": {
+                "external_knowledge_id": null,
+                "external_knowledge_api_id": null,
+                "external_knowledge_api_name": null,
+                "external_knowledge_api_endpoint": null
+            },
+            "external_retrieval_model": {
+                "top_k": 10,
+                "score_threshold": 0.0,
+                "score_threshold_enabled": false
+            },
+            "doc_metadata": [],
+            "built_in_field_enabled": false
+        },
+        {
+            "id": "f4032833-62b7-48ac-90a5-9fd54b884e63",
+            "name": "成大活動_20250428",
+            "description": "useful for when you want to answer queries about the activity_result.txt",
+            "provider": "vendor",
+            "permission": "all_team_members",
+            "data_source_type": "upload_file",
+            "indexing_technique": "high_quality",
+            "app_count": 1,
+            "document_count": 1,
+            "word_count": 193142,
+            "created_by": "32997ed7-464d-4331-bfd4-a4968be0d48d",
+            "created_at": 1745811264,
+            "updated_by": "32997ed7-464d-4331-bfd4-a4968be0d48d",
+            "updated_at": 1745814244,
+            "embedding_model": "text-embedding-3-large",
+            "embedding_model_provider": "langgenius/openai/openai",
+            "embedding_available": true,
+            "retrieval_model_dict": {
+                "search_method": "semantic_search",
+                "reranking_enable": false,
+                "reranking_mode": "weighted_score",
+                "reranking_model": {
+                    "reranking_provider_name": "",
+                    "reranking_model_name": ""
+                },
+                "weights": {
+                    "weight_type": "customized",
+                    "keyword_setting": {
+                        "keyword_weight": 0.4
+                    },
+                    "vector_setting": {
+                        "vector_weight": 0.6,
+                        "embedding_model_name": "",
+                        "embedding_provider_name": ""
+                    }
+                },
+                "top_k": 10,
+                "score_threshold_enabled": false,
+                "score_threshold": 0.0
+            },
+            "tags": [],
+            "doc_form": "text_model",
+            "external_knowledge_info": {
+                "external_knowledge_id": null,
+                "external_knowledge_api_id": null,
+                "external_knowledge_api_name": null,
+                "external_knowledge_api_endpoint": null
+            },
+            "external_retrieval_model": {
+                "top_k": 10,
+                "score_threshold": 0.0,
+                "score_threshold_enabled": false
+            },
+            "doc_metadata": [],
+            "built_in_field_enabled": false
+        },
+        {
+            "id": "220c72d9-e02b-4604-91b5-14b5d2420d5c",
+            "name": "activity_result.tx...",
+            "description": "useful for when you want to answer queries about the activity_result.txt",
+            "provider": "vendor",
+            "permission": "all_team_members",
+            "data_source_type": "upload_file",
+            "indexing_technique": "high_quality",
+            "app_count": 2,
+            "document_count": 1,
+            "word_count": 194386,
+            "created_by": "32997ed7-464d-4331-bfd4-a4968be0d48d",
+            "created_at": 1745660211,
+            "updated_by": "32997ed7-464d-4331-bfd4-a4968be0d48d",
+            "updated_at": 1745810675,
+            "embedding_model": "text-embedding-3-small",
+            "embedding_model_provider": "langgenius/openai/openai",
+            "embedding_available": true,
+            "retrieval_model_dict": {
+                "search_method": "full_text_search",
+                "reranking_enable": false,
+                "reranking_mode": "weighted_score",
+                "reranking_model": {
+                    "reranking_provider_name": "",
+                    "reranking_model_name": ""
+                },
+                "weights": {
+                    "weight_type": "customized",
+                    "keyword_setting": {
+                        "keyword_weight": 0.2
+                    },
+                    "vector_setting": {
+                        "vector_weight": 0.8,
+                        "embedding_model_name": "text-embedding-3-small",
+                        "embedding_provider_name": "langgenius/openai/openai"
+                    }
+                },
+                "top_k": 10,
+                "score_threshold_enabled": false,
+                "score_threshold": 0.0
+            },
+            "tags": [],
+            "doc_form": "hierarchical_model",
+            "external_knowledge_info": {
+                "external_knowledge_id": null,
+                "external_knowledge_api_id": null,
+                "external_knowledge_api_name": null,
+                "external_knowledge_api_endpoint": null
+            },
+            "external_retrieval_model": {
+                "top_k": 10,
+                "score_threshold": 0.0,
+                "score_threshold_enabled": false
+            },
+            "doc_metadata": [],
+            "built_in_field_enabled": false
+        },
+        {
+            "id": "6ea8855b-a66c-4868-a217-a5151bf68fc6",
+            "name": "成大活動",
+            "description": "活動2050426",
+            "provider": "vendor",
+            "permission": "all_team_members",
+            "data_source_type": "upload_file",
+            "indexing_technique": "high_quality",
+            "app_count": 0,
+            "document_count": 1,
+            "word_count": 194386,
+            "created_by": "32997ed7-464d-4331-bfd4-a4968be0d48d",
+            "created_at": 1745650968,
+            "updated_by": "32997ed7-464d-4331-bfd4-a4968be0d48d",
+            "updated_at": 1745655879,
+            "embedding_model": "text-embedding-3-small",
+            "embedding_model_provider": "langgenius/openai/openai",
+            "embedding_available": true,
+            "retrieval_model_dict": {
+                "search_method": "semantic_search",
+                "reranking_enable": false,
+                "reranking_mode": "weighted_score",
+                "reranking_model": {
+                    "reranking_provider_name": "",
+                    "reranking_model_name": ""
+                },
+                "weights": {
+                    "weight_type": "customized",
+                    "keyword_setting": {
+                        "keyword_weight": 0.3
+                    },
+                    "vector_setting": {
+                        "vector_weight": 0.7,
+                        "embedding_model_name": "",
+                        "embedding_provider_name": ""
+                    }
+                },
+                "top_k": 8,
+                "score_threshold_enabled": false,
+                "score_threshold": 0.0
+            },
+            "tags": [],
+            "doc_form": "text_model",
+            "external_knowledge_info": {
+                "external_knowledge_id": null,
+                "external_knowledge_api_id": null,
+                "external_knowledge_api_name": null,
+                "external_knowledge_api_endpoint": null
+            },
+            "external_retrieval_model": {
+                "top_k": 8,
+                "score_threshold": 0.0,
+                "score_threshold_enabled": false
+            },
+            "doc_metadata": [
+                {
+                    "id": "9e1b8385-ba1d-4dcb-a5c0-e86e80e5fb6b",
+                    "name": "data",
+                    "type": "time"
+                }
+            ],
+            "built_in_field_enabled": false
+        },
+        {
+            "id": "2cf4e91e-6b0f-43d9-ac48-18ecd355734c",
+            "name": "成大11301課程",
+            "description": "選課系統的課程",
+            "provider": "vendor",
+            "permission": "all_team_members",
+            "data_source_type": "upload_file",
+            "indexing_technique": "high_quality",
+            "app_count": 1,
+            "document_count": 0,
+            "word_count": 0,
+            "created_by": "a4ccdf04-3c03-4e2f-9363-7b06e6d9803f",
+            "created_at": 1740677256,
+            "updated_by": "a4ccdf04-3c03-4e2f-9363-7b06e6d9803f",
+            "updated_at": 1746447832,
+            "embedding_model": "voyage-multilingual-2",
+            "embedding_model_provider": "langgenius/voyage/voyage",
+            "embedding_available": true,
+            "retrieval_model_dict": {
+                "search_method": "hybrid_search",
+                "reranking_enable": true,
+                "reranking_mode": "reranking_model",
+                "reranking_model": {
+                    "reranking_provider_name": "langgenius/voyage/voyage",
+                    "reranking_model_name": "rerank-2"
+                },
+                "weights": {
+                    "weight_type": "customized",
+                    "keyword_setting": {
+                        "keyword_weight": 0.3
+                    },
+                    "vector_setting": {
+                        "vector_weight": 0.7,
+                        "embedding_model_name": "voyage-multilingual-2",
+                        "embedding_provider_name": "langgenius/voyage/voyage"
+                    }
+                },
+                "top_k": 20,
+                "score_threshold_enabled": false,
+                "score_threshold": 0.0
+            },
+            "tags": [],
+            "doc_form": null,
+            "external_knowledge_info": {
+                "external_knowledge_id": null,
+                "external_knowledge_api_id": null,
+                "external_knowledge_api_name": null,
+                "external_knowledge_api_endpoint": null
+            },
+            "external_retrieval_model": {
+                "top_k": 20,
+                "score_threshold": 0.0,
+                "score_threshold_enabled": false
+            },
+            "doc_metadata": [],
+            "built_in_field_enabled": false
+        },
+        {
+            "id": "5cf47f30-f213-46ee-bdba-7cfa0c305645",
+            "name": "住宿服務組公告",
+            "description": "截至二月三號",
+            "provider": "vendor",
+            "permission": "all_team_members",
+            "data_source_type": "upload_file",
+            "indexing_technique": "high_quality",
+            "app_count": 1,
+            "document_count": 129,
+            "word_count": 152867,
+            "created_by": "0a9e9433-b240-49d8-8d30-cc88aebed0be",
+            "created_at": 1739023317,
+            "updated_by": "0a9e9433-b240-49d8-8d30-cc88aebed0be",
+            "updated_at": 1741522556,
+            "embedding_model": "text-embedding-3-large",
+            "embedding_model_provider": "langgenius/openai/openai",
+            "embedding_available": true,
+            "retrieval_model_dict": {
+                "search_method": "hybrid_search",
+                "reranking_enable": false,
+                "reranking_mode": "weighted_score",
+                "reranking_model": {
+                    "reranking_provider_name": "",
+                    "reranking_model_name": ""
+                },
+                "weights": {
+                    "weight_type": null,
+                    "keyword_setting": {
+                        "keyword_weight": 0.3
+                    },
+                    "vector_setting": {
+                        "vector_weight": 0.7,
+                        "embedding_model_name": "text-embedding-3-large",
+                        "embedding_provider_name": "openai"
+                    }
+                },
+                "top_k": 3,
+                "score_threshold_enabled": false,
+                "score_threshold": 0.0
+            },
+            "tags": [
+                {
+                    "id": "52b42960-408a-45cf-b551-603395a84fd8",
+                    "name": "宿舍",
+                    "type": "knowledge"
+                },
+                {
+                    "id": "cac8d8cc-f3b9-4257-a41e-454be41ba63d",
+                    "name": "yenslife",
+                    "type": "knowledge"
+                }
+            ],
+            "doc_form": "hierarchical_model",
+            "external_knowledge_info": {
+                "external_knowledge_id": null,
+                "external_knowledge_api_id": null,
+                "external_knowledge_api_name": null,
+                "external_knowledge_api_endpoint": null
+            },
+            "external_retrieval_model": {
+                "top_k": 3,
+                "score_threshold": 0.0,
+                "score_threshold_enabled": false
+            },
+            "doc_metadata": [],
+            "built_in_field_enabled": false
+        },
+        {
+            "id": "3c78958c-be39-4822-92a3-d39d208d96ab",
+            "name": "住宿服務組網站 (不包含公告)",
+            "description": "住宿服務組網站，包含住宿規則 pdf 檔案轉換的 Markdown",
+            "provider": "vendor",
+            "permission": "all_team_members",
+            "data_source_type": "upload_file",
+            "indexing_technique": "high_quality",
+            "app_count": 1,
+            "document_count": 83,
+            "word_count": 467165,
+            "created_by": "0a9e9433-b240-49d8-8d30-cc88aebed0be",
+            "created_at": 1739022721,
+            "updated_by": "0a9e9433-b240-49d8-8d30-cc88aebed0be",
+            "updated_at": 1741524169,
+            "embedding_model": "text-embedding-3-large",
+            "embedding_model_provider": "langgenius/openai/openai",
+            "embedding_available": true,
+            "retrieval_model_dict": {
+                "search_method": "hybrid_search",
+                "reranking_enable": false,
+                "reranking_mode": "weighted_score",
+                "reranking_model": {
+                    "reranking_provider_name": "",
+                    "reranking_model_name": ""
+                },
+                "weights": {
+                    "weight_type": null,
+                    "keyword_setting": {
+                        "keyword_weight": 0.3
+                    },
+                    "vector_setting": {
+                        "vector_weight": 0.7,
+                        "embedding_model_name": "text-embedding-3-large",
+                        "embedding_provider_name": "openai"
+                    }
+                },
+                "top_k": 3,
+                "score_threshold_enabled": false,
+                "score_threshold": 0.0
+            },
+            "tags": [
+                {
+                    "id": "52b42960-408a-45cf-b551-603395a84fd8",
+                    "name": "宿舍",
+                    "type": "knowledge"
+                },
+                {
+                    "id": "cac8d8cc-f3b9-4257-a41e-454be41ba63d",
+                    "name": "yenslife",
+                    "type": "knowledge"
+                }
+            ],
+            "doc_form": "hierarchical_model",
+            "external_knowledge_info": {
+                "external_knowledge_id": null,
+                "external_knowledge_api_id": null,
+                "external_knowledge_api_name": null,
+                "external_knowledge_api_endpoint": null
+            },
+            "external_retrieval_model": {
+                "top_k": 3,
+                "score_threshold": 0.0,
+                "score_threshold_enabled": false
+            },
+            "doc_metadata": [],
+            "built_in_field_enabled": false
+        },
+        {
+            "id": "72470d65-5f36-49ad-89c5-2a09e18664d0",
+            "name": "社團相關規定",
+            "description": "回答社團相關規定：社團法規、社團如何成立、懲處等。",
+            "provider": "vendor",
+            "permission": "all_team_members",
+            "data_source_type": "upload_file",
+            "indexing_technique": "high_quality",
+            "app_count": 1,
+            "document_count": 24,
+            "word_count": 85130,
+            "created_by": "1997d8fb-d984-4cc8-aafa-b0c76167169d",
+            "created_at": 1735745546,
+            "updated_by": "1997d8fb-d984-4cc8-aafa-b0c76167169d",
+            "updated_at": 1746445784,
+            "embedding_model": "text-embedding-3-large",
+            "embedding_model_provider": "langgenius/openai/openai",
+            "embedding_available": true,
+            "retrieval_model_dict": {
+                "search_method": "hybrid_search",
+                "reranking_enable": true,
+                "reranking_mode": "weighted_score",
+                "reranking_model": {
+                    "reranking_provider_name": "",
+                    "reranking_model_name": ""
+                },
+                "weights": {
+                    "weight_type": null,
+                    "keyword_setting": {
+                        "keyword_weight": 0.3
+                    },
+                    "vector_setting": {
+                        "vector_weight": 0.7,
+                        "embedding_model_name": "text-embedding-3-large",
+                        "embedding_provider_name": "langgenius/openai/openai"
+                    }
+                },
+                "top_k": 15,
+                "score_threshold_enabled": false,
+                "score_threshold": 0.0
+            },
+            "tags": [],
+            "doc_form": "text_model",
+            "external_knowledge_info": {
+                "external_knowledge_id": null,
+                "external_knowledge_api_id": null,
+                "external_knowledge_api_name": null,
+                "external_knowledge_api_endpoint": null
+            },
+            "external_retrieval_model": {
+                "top_k": 15,
+                "score_threshold": 0.0,
+                "score_threshold_enabled": false
+            },
+            "doc_metadata": [],
+            "built_in_field_enabled": false
+        },
+        {
+            "id": "864586e0-fc8f-42cf-930c-22f20cbfa564",
+            "name": "社團基本資訊",
+            "description": "回答社團基本資訊：社長、聯絡資訊、社課時間、社團宗旨",
+            "provider": "vendor",
+            "permission": "all_team_members",
+            "data_source_type": "upload_file",
+            "indexing_technique": "high_quality",
+            "app_count": 1,
+            "document_count": 9,
+            "word_count": 96664,
+            "created_by": "1997d8fb-d984-4cc8-aafa-b0c76167169d",
+            "created_at": 1735745360,
+            "updated_by": "1997d8fb-d984-4cc8-aafa-b0c76167169d",
+            "updated_at": 1746447765,
+            "embedding_model": "voyage-multilingual-2",
+            "embedding_model_provider": "langgenius/voyage/voyage",
+            "embedding_available": true,
+            "retrieval_model_dict": {
+                "search_method": "hybrid_search",
+                "reranking_enable": true,
+                "reranking_mode": "reranking_model",
+                "reranking_model": {
+                    "reranking_provider_name": "langgenius/voyage/voyage",
+                    "reranking_model_name": "rerank-2"
+                },
+                "weights": {
+                    "weight_type": null,
+                    "keyword_setting": {
+                        "keyword_weight": 0.3
+                    },
+                    "vector_setting": {
+                        "vector_weight": 0.7,
+                        "embedding_model_name": "text-embedding-3-large",
+                        "embedding_provider_name": "langgenius/openai/openai"
+                    }
+                },
+                "top_k": 15,
+                "score_threshold_enabled": true,
+                "score_threshold": 0.0
+            },
+            "tags": [],
+            "doc_form": "text_model",
+            "external_knowledge_info": {
+                "external_knowledge_id": null,
+                "external_knowledge_api_id": null,
+                "external_knowledge_api_name": null,
+                "external_knowledge_api_endpoint": null
+            },
+            "external_retrieval_model": {
+                "top_k": 15,
+                "score_threshold": 0.0,
+                "score_threshold_enabled": true
+            },
+            "doc_metadata": [],
+            "built_in_field_enabled": false
+        },
+        {
+            "id": "20a9185f-96c2-4647-a38f-c707b7447d49",
+            "name": "單車節文件",
+            "description": "useful for when you want to answer queries about the output-1-clean.txt",
+            "provider": "vendor",
+            "permission": "all_team_members",
+            "data_source_type": "upload_file",
+            "indexing_technique": "high_quality",
+            "app_count": 1,
+            "document_count": 1,
+            "word_count": 41130,
+            "created_by": "0a9e9433-b240-49d8-8d30-cc88aebed0be",
+            "created_at": 1735132034,
+            "updated_by": "0a9e9433-b240-49d8-8d30-cc88aebed0be",
+            "updated_at": 1735844630,
+            "embedding_model": "text-embedding-3-small",
+            "embedding_model_provider": "langgenius/openai/openai",
+            "embedding_available": true,
+            "retrieval_model_dict": {
+                "search_method": "hybrid_search",
+                "reranking_enable": true,
+                "reranking_mode": "weighted_score",
+                "reranking_model": {
+                    "reranking_provider_name": "",
+                    "reranking_model_name": ""
+                },
+                "weights": {
+                    "weight_type": null,
+                    "keyword_setting": {
+                        "keyword_weight": 0.3
+                    },
+                    "vector_setting": {
+                        "vector_weight": 0.7,
+                        "embedding_model_name": "text-embedding-3-small",
+                        "embedding_provider_name": "openai"
+                    }
+                },
+                "top_k": 4,
+                "score_threshold_enabled": false,
+                "score_threshold": 0.0
+            },
+            "tags": [],
+            "doc_form": "text_model",
+            "external_knowledge_info": {
+                "external_knowledge_id": null,
+                "external_knowledge_api_id": null,
+                "external_knowledge_api_name": null,
+                "external_knowledge_api_endpoint": null
+            },
+            "external_retrieval_model": {
+                "top_k": 4,
+                "score_threshold": 0.0,
+                "score_threshold_enabled": false
+            },
+            "doc_metadata": [],
+            "built_in_field_enabled": false
+        }
+    ],
+    "has_more": false,
+    "limit": 20,
+    "total": 10,
+    "page": 1
+}
