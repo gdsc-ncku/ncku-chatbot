@@ -6,10 +6,12 @@ from linebot.models import (
     ImageMessage,
     AudioMessage,
     FollowEvent,
+    PostbackEvent,
 )
 from ..config.line_config import handler
 from ..services.message_service import MessageService
 from ..services.welcome_service import WelcomeService
+from ..services.postback_service import PostbackService
 from ..config.logger import get_logger
 
 # 取得模組的日誌記錄器
@@ -22,6 +24,7 @@ router = APIRouter(prefix="/linebot", tags=["linebot"])
 # 建立 MessageService 物件
 message_service = MessageService()
 welcome_service = WelcomeService()
+postback_service = PostbackService()
 
 
 # 註冊訊息處理函式
@@ -51,6 +54,13 @@ def handle_audio_message(event):
 def handle_follow_event(event):
     logger.info("收到加入好友事件")
     welcome_service.send_welcome_message(event)
+
+
+@handler.add(PostbackEvent)
+def handle_postback_event(event):
+    logger.info("收到按鈕事件")
+    reply_messages = postback_service.handle_postback_event(event)
+    postback_service.send_message(event.reply_token, reply_messages)
 
 
 @router.post("/webhook")
