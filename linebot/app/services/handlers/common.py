@@ -1,5 +1,6 @@
 """共用函式模組"""
 
+import json
 import requests
 from linebot.models import (
     QuickReply,
@@ -65,8 +66,19 @@ def show_loading_animation(user_id, duration=5):
 
 def send_message(reply_token: str, messages: list[SendMessage]) -> None:
     """發送訊息到 LINE"""
-    readable_messages = str(messages).encode("utf-8").decode("unicode_escape")
-    logger.info(f"準備發送訊息 (使用可讀字串): {readable_messages}")
+    try:
+        readable_messages = json.dumps(
+            [
+                msg.as_json_dict() if hasattr(msg, "as_json_dict") else str(msg)
+                for msg in messages
+            ],
+            ensure_ascii=False,
+            indent=2,
+        )
+        logger.info(f"準備發送訊息 (可讀格式): {readable_messages}")
+    except Exception as e:
+        logger.warning(f"訊息轉換成 JSON 時發生錯誤: {e}")
+        readable_messages = str(messages)
 
     # 確保 messages 是一個扁平化的訊息列表 (因為可能有巢狀的訊息列表)
     flat_messages = []
