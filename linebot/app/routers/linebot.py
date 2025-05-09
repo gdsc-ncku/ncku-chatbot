@@ -1,8 +1,15 @@
 from fastapi import APIRouter, Request, HTTPException
 from linebot.exceptions import InvalidSignatureError
-from linebot.models import MessageEvent, TextMessage, ImageMessage, AudioMessage
+from linebot.models import (
+    MessageEvent,
+    TextMessage,
+    ImageMessage,
+    AudioMessage,
+    FollowEvent,
+)
 from ..config.line_config import handler
 from ..services.message_service import MessageService
+from ..services.welcome_service import WelcomeService
 from ..config.logger import get_logger
 
 # 取得模組的日誌記錄器
@@ -14,6 +21,7 @@ router = APIRouter(prefix="/linebot", tags=["linebot"])
 
 # 建立 MessageService 物件
 message_service = MessageService()
+welcome_service = WelcomeService()
 
 
 # 註冊訊息處理函式
@@ -36,6 +44,13 @@ def handle_audio_message(event):
     logger.info("收到音訊訊息")
     reply_message = message_service.handle_audio_message(event)
     message_service.send_message(event.reply_token, [reply_message])
+
+
+# 加入好友歡迎訊息
+@handler.add(FollowEvent)
+def handle_follow_event(event):
+    logger.info("收到加入好友事件")
+    welcome_service.send_welcome_message(event)
 
 
 @router.post("/webhook")
