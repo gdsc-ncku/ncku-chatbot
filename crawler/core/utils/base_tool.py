@@ -44,11 +44,11 @@ def get_all_attribute_words(tbody, results=[]):
             img_tag = td.find("img")
 
             if img_tag and img_tag.has_attr("src"):
-                value = img_tag["src"]
+                value += f'_{img_tag["src"]}'
             else:
                 a_tag = td.find("a")
                 if a_tag and a_tag.has_attr("href"):
-                    value = a_tag["href"]
+                    value += f'_{a_tag["href"]}'
 
             _results.append(f"\t{label}:\t{value}")
         row.decompose()
