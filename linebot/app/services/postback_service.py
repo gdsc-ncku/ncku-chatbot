@@ -20,4 +20,5 @@ class PostbackService:
 
     def send_message(self, reply_token, messages):
         """發送訊息到 LINE"""
+        logger.info(f"發送訊息到 LINE: {messages}")
         send_message(reply_token, messages)

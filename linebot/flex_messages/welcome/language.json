@@ -8,7 +8,7 @@
         "contents": [
             {
                 "type": "text",
-                "text": "服務條款",
+                "text": "請選擇語言",
                 "weight": "bold",
                 "size": "xl",
                 "align": "center",
@@ -16,38 +16,38 @@
             },
             {
                 "type": "text",
-                "text": "請閱讀並同意以下服務條款與隱私政策內容，才能繼續使用本服務。",
-                "wrap": true,
+                "text": "Please select your preferred language.",
                 "size": "md",
-                "color": "#AAAAAA"
+                "wrap": true,
+                "color": "#BBBBBB",
+                "align": "center"
             }
         ]
     },
     "footer": {
         "type": "box",
-        "layout": "horizontal",
+        "layout": "vertical",
         "spacing": "md",
         "contents": [
+            {
+                "type": "button",
+                "color": "#FFFFFF",
+                "action": {
+                    "type": "postback",
+                    "label": "台灣正體",
+                    "data": "zh-TW"
+                },
+                "style": "secondary"
+            },
             {
                 "type": "button",
                 "style": "secondary",
                 "color": "#FFFFFF",
                 "action": {
                     "type": "postback",
-                    "label": "不同意",
-                    "data": "reject_terms"
-                },
-                "adjustMode": "shrink-to-fit"
-            },
-            {
-                "type": "button",
-                "style": "secondary",
-                "action": {
-                    "type": "postback",
-                    "label": "同意",
-                    "data": "accept_terms"
-                },
-                "color": "#FFFFFF"
+                    "label": "English",
+                    "data": "en"
+                }
             }
         ]
     },

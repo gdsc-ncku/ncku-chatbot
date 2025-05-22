@@ -8,7 +8,7 @@
         "contents": [
             {
                 "type": "text",
-                "text": "服務條款",
+                "text": "請選擇您的身份",
                 "weight": "bold",
                 "size": "xl",
                 "align": "center",
@@ -16,16 +16,17 @@
             },
             {
                 "type": "text",
-                "text": "請閱讀並同意以下服務條款與隱私政策內容，才能繼續使用本服務。",
+                "text": "請從以下選項中選擇您目前的在校身份。",
                 "wrap": true,
                 "size": "md",
-                "color": "#AAAAAA"
+                "color": "#AAAAAA",
+                "align": "center"
             }
         ]
     },
     "footer": {
         "type": "box",
-        "layout": "horizontal",
+        "layout": "vertical",
         "spacing": "md",
         "contents": [
             {
@@ -34,20 +35,29 @@
                 "color": "#FFFFFF",
                 "action": {
                     "type": "postback",
-                    "label": "不同意",
-                    "data": "reject_terms"
-                },
-                "adjustMode": "shrink-to-fit"
+                    "label": "教職員",
+                    "data": "role_faculty"
+                }
             },
             {
                 "type": "button",
                 "style": "secondary",
+                "color": "#FFFFFF",
                 "action": {
                     "type": "postback",
-                    "label": "同意",
-                    "data": "accept_terms"
-                },
-                "color": "#FFFFFF"
+                    "label": "學生",
+                    "data": "role_student"
+                }
+            },
+            {
+                "type": "button",
+                "style": "secondary",
+                "color": "#FFFFFF",
+                "action": {
+                    "type": "postback",
+                    "label": "校外人士",
+                    "data": "role_visitor"
+                }
             }
         ]
     },
