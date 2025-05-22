@@ -1,0 +1,62 @@
+{
+    "type": "bubble",
+    "size": "mega",
+    "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "md",
+        "contents": [
+            {
+                "type": "text",
+                "text": "請選擇語言",
+                "weight": "bold",
+                "size": "xl",
+                "align": "center",
+                "color": "#FFFFFF"
+            },
+            {
+                "type": "text",
+                "text": "Please select your preferred language.",
+                "size": "md",
+                "wrap": true,
+                "color": "#BBBBBB",
+                "align": "center"
+            }
+        ]
+    },
+    "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "md",
+        "contents": [
+            {
+                "type": "button",
+                "color": "#FFFFFF",
+                "action": {
+                    "type": "postback",
+                    "label": "台灣正體",
+                    "data": "zh-TW"
+                },
+                "style": "secondary"
+            },
+            {
+                "type": "button",
+                "style": "secondary",
+                "color": "#FFFFFF",
+                "action": {
+                    "type": "postback",
+                    "label": "English",
+                    "data": "en"
+                }
+            }
+        ]
+    },
+    "styles": {
+        "body": {
+            "backgroundColor": "#4C1E20"
+        },
+        "footer": {
+            "backgroundColor": "#4C1E20"
+        }
+    }
+}

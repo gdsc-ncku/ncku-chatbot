@@ -1,5 +1,6 @@
 """共用函式模組"""
 
+import json
 import requests
 from linebot.models import (
     QuickReply,
@@ -22,6 +23,7 @@ COMMANDS = {
         "💡 您也可以直接輸入問題，我會盡力協助您！"
     ),
     "/setup": "⚙️ 設定功能開發中，敬請期待！",
+    "🚧 尚未施工完畢，敬請期待！ 🚧": "🚧 尚未施工完畢，敬請期待！ 🚧",
 }
 
 
@@ -65,16 +67,33 @@ def show_loading_animation(user_id, duration=5):
 
 def send_message(reply_token: str, messages: list[SendMessage]) -> None:
     """發送訊息到 LINE"""
-    readable_messages = str(messages).encode("utf-8").decode("unicode_escape")
-    logger.info(f"準備發送訊息 (使用可讀字串): {readable_messages}")
+    try:
+        readable_messages = json.dumps(
+            [
+                msg.as_json_dict() if hasattr(msg, "as_json_dict") else str(msg)
+                for msg in messages
+            ],
+            ensure_ascii=False,
+            indent=2,
+        )
+        logger.info(f"準備發送訊息 (可讀格式): {readable_messages}")
+    except Exception as e:
+        logger.warning(f"訊息轉換成 JSON 時發生錯誤: {e}")
+        readable_messages = str(messages)
 
     # 確保 messages 是一個扁平化的訊息列表 (因為可能有巢狀的訊息列表)
-    flat_messages = []
+    flet_messages = []
     for msg in messages:
         if isinstance(msg, list):
-            flat_messages.extend(msg)  # 如果是列表，則展開
+            flet_messages.extend(msg)  # 如果是列表，則展開
         else:
-            flat_messages.append(msg)  # 如果是單一訊息，則直接加入
+            flet_messages.append(msg)  # 如果是單一訊息，則直接加入
 
-    line_bot_api.reply_message(reply_token, flat_messages)
-    logger.info(f"已發送訊息: {flat_messages}")
+    logger.info(f"發送訊息: {flet_messages}")
+    print("發送訊息:", flet_messages)
+    try:
+        line_bot_api.reply_message(reply_token, flet_messages)
+    except Exception as e:
+        logger.error(f"發送訊息時發生錯誤: {e}")
+        raise
+    logger.info(f"已發送訊息: {flet_messages}")

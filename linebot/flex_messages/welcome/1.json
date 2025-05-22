@@ -1,0 +1,50 @@
+{
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "歡迎使用 NCKU Chatbot！",
+        "weight": "bold",
+        "size": "lg",
+        "wrap": true,
+        "color": "#FFFFFF"
+      },
+      {
+        "type": "text",
+        "text": "請先閱讀並同意服務條款，以開始使用本服務。",
+        "size": "sm",
+        "color": "#AAAAAA",
+        "margin": "md",
+        "wrap": true
+      }
+    ],
+    "backgroundColor": "#4C1E20"
+  },
+  "footer": {
+    "type": "box",
+    "layout": "vertical",
+    "spacing": "sm",
+    "contents": [
+      {
+        "type": "button",
+        "height": "sm",
+        "action": {
+          "type": "postback",
+          "label": "查看服務條款",
+          "data": "read_terms"
+        },
+        "color": "#FFFFFF",
+        "style": "secondary"
+      }
+    ],
+    "flex": 0
+  },
+  "styles": {
+    "footer": {
+      "backgroundColor": "#4C1E20"
+    }
+  }
+}

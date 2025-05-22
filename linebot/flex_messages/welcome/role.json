@@ -1,0 +1,72 @@
+{
+    "type": "bubble",
+    "size": "mega",
+    "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "md",
+        "contents": [
+            {
+                "type": "text",
+                "text": "請選擇您的身份",
+                "weight": "bold",
+                "size": "xl",
+                "align": "center",
+                "color": "#FFFFFF"
+            },
+            {
+                "type": "text",
+                "text": "請從以下選項中選擇您目前的在校身份。",
+                "wrap": true,
+                "size": "md",
+                "color": "#AAAAAA",
+                "align": "center"
+            }
+        ]
+    },
+    "footer": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "md",
+        "contents": [
+            {
+                "type": "button",
+                "style": "secondary",
+                "color": "#FFFFFF",
+                "action": {
+                    "type": "postback",
+                    "label": "教職員",
+                    "data": "role_faculty"
+                }
+            },
+            {
+                "type": "button",
+                "style": "secondary",
+                "color": "#FFFFFF",
+                "action": {
+                    "type": "postback",
+                    "label": "學生",
+                    "data": "role_student"
+                }
+            },
+            {
+                "type": "button",
+                "style": "secondary",
+                "color": "#FFFFFF",
+                "action": {
+                    "type": "postback",
+                    "label": "校外人士",
+                    "data": "role_visitor"
+                }
+            }
+        ]
+    },
+    "styles": {
+        "body": {
+            "backgroundColor": "#4C1E20"
+        },
+        "footer": {
+            "backgroundColor": "#4C1E20"
+        }
+    }
+}

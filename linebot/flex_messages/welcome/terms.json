@@ -1,0 +1,62 @@
+{
+    "type": "bubble",
+    "size": "mega",
+    "body": {
+        "type": "box",
+        "layout": "vertical",
+        "spacing": "md",
+        "contents": [
+            {
+                "type": "text",
+                "text": "服務條款",
+                "weight": "bold",
+                "size": "xl",
+                "align": "center",
+                "color": "#FFFFFF"
+            },
+            {
+                "type": "text",
+                "text": "請閱讀並同意以下服務條款與隱私政策內容，才能繼續使用本服務。",
+                "wrap": true,
+                "size": "md",
+                "color": "#AAAAAA"
+            }
+        ]
+    },
+    "footer": {
+        "type": "box",
+        "layout": "horizontal",
+        "spacing": "md",
+        "contents": [
+            {
+                "type": "button",
+                "style": "secondary",
+                "color": "#FFFFFF",
+                "action": {
+                    "type": "postback",
+                    "label": "不同意",
+                    "data": "reject_terms"
+                },
+                "adjustMode": "shrink-to-fit"
+            },
+            {
+                "type": "button",
+                "style": "secondary",
+                "action": {
+                    "type": "postback",
+                    "label": "同意",
+                    "data": "accept_terms"
+                },
+                "color": "#FFFFFF"
+            }
+        ]
+    },
+    "styles": {
+        "body": {
+            "backgroundColor": "#4C1E20"
+        },
+        "footer": {
+            "backgroundColor": "#4C1E20"
+        }
+    }
+}
