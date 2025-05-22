@@ -1,5 +1,3 @@
-import json
-
 from linebot.models import TextSendMessage, FlexSendMessage
 from linebot.models.events import FollowEvent
 
@@ -9,6 +7,7 @@ from .handlers import (
 )
 from ..config.line_config import line_bot_api
 from ..config.logger import get_logger
+from .utils import flex_message_convert_to_json
 
 logger = get_logger(__name__)
 
@@ -21,12 +20,6 @@ Welcome to NCKU Chatbot — an AI chatbot developed by GDG on Campus, here to he
 Before getting started, please agree to the terms of use and set up your personal profile.
 
 Let's get started, {user_display_name} 🫶"""
-
-
-def flex_message_convert_to_json(file_path):
-    with open(file_path, "r") as f:
-        flex_message = json.load(f)
-    return flex_message
 
 
 class WelcomeService:
