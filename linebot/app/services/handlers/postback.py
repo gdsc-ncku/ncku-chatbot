@@ -37,6 +37,7 @@ def handle_postback_event(event):
     data = event.postback.data
     user_id = event.source.user_id
     if data == "read_terms":
+        logger.info(f"User {user_id} requested to read terms.")
         return [
             TextSendMessage(text=f"{TERMS_MESSAGE}"),
             FlexSendMessage(
@@ -47,6 +48,7 @@ def handle_postback_event(event):
             ),
         ]
     elif data == "accept_terms":
+        logger.info(f"User {user_id} accepted terms.")
         user_repository.update_accpted_terms(user_id, True)
         return [
             TextSendMessage(text="感謝您的回覆，接下來我們來設定您的個人資料吧！"),
@@ -58,6 +60,7 @@ def handle_postback_event(event):
             ),
         ]
     elif data == "reject_terms":
+        logger.info(f"User {user_id} rejected terms.")
         user_repository.update_accpted_terms(user_id, False)
         return [TextSendMessage(text="感謝您的回覆，如果有需要隨時可以點擊同意歐")]
     elif data == "zh-TW":
@@ -72,6 +75,7 @@ def handle_postback_event(event):
             ),
         ]
     elif data == "en":
+        logger.info(f"User {user_id} selected English language.")
         user_repository.update_language(user_id, "en")
         return [
             TextSendMessage(
@@ -85,6 +89,7 @@ def handle_postback_event(event):
             ),
         ]
     elif data == "role_faculty":
+        logger.info(f"User {user_id} selected faculty role.")
         user_repository.update_roles(user_id, "faculty")
         return [
             TextSendMessage(text="您已經設定為教職員身份，鵝子歡迎您！"),
@@ -93,6 +98,7 @@ def handle_postback_event(event):
             ),
         ]
     elif data == "role_student":
+        logger.info(f"User {user_id} selected student role.")
         user_repository.update_roles(user_id, "student")
         return [
             TextSendMessage(text="您已經設定為學生身份，鵝子歡迎您！"),
@@ -101,6 +107,7 @@ def handle_postback_event(event):
             ),
         ]
     elif data == "role_visitor":
+        logger.info(f"User {user_id} selected visitor role.")
         user_repository.update_roles(user_id, "visitor")
         return [
             TextSendMessage(text="您已經設定為校外人士身份"),
@@ -109,4 +116,4 @@ def handle_postback_event(event):
             ),
         ]
     else:
-        return [TextSendMessage(text="請選擇一個選項")]
+        logger.warning(f"Unknown postback data: {data} from user {user_id}")
