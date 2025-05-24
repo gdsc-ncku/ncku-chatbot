@@ -78,7 +78,6 @@ def handle_postback_event(event):
             ),
         ]
     elif data == "role_faculty":
-        welcome_test_message = "hahahaha"
         return [
             TextSendMessage(text="您已經設定為教職員身份，鵝子歡迎您！"),
             TextSendMessage(
@@ -91,7 +90,6 @@ def handle_postback_event(event):
             TextSendMessage(
                 text=WELCOME_MESSAGE_AFTER_SETTING, quick_reply=create_quickreply()
             ),
-            create_quickreply(),
         ]
     elif data == "role_visitor":
         return [
