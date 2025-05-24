@@ -15,8 +15,12 @@ class PostbackService:
 
     def handle_postback_event(self, event):
         """處理按鈕事件"""
+        result = handle_postback_event(event)
+        if not result:
+            logger.warning(f"未處理的按鈕事件: {event.postback.data}")
+            return None
         show_loading_animation(event.source.user_id)
-        return handle_postback_event(event)
+        return result
 
     def send_message(self, reply_token, messages):
         """發送訊息到 LINE"""
