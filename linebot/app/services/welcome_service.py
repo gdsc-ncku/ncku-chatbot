@@ -31,6 +31,11 @@ class WelcomeService:
         if event.type != "follow":
             self.logger.info(f"Not a follow event: {event}")
             return
+        reply_token = event.reply_token
+
+        if not reply_token:
+            self.logger.warning("No reply token found in the event.")
+            return
 
         user_id = event.source.user_id
         user_profile = self.line_bot_api.get_profile(user_id)
@@ -42,7 +47,7 @@ class WelcomeService:
         self.logger.info(f"Sending welcome message to user: {user_id}")
         flex_message_json = flex_message_convert_to_json("flex_messages/welcome/1.json")
         send_message(
-            event.reply_token,
+            reply_token,
             [
                 TextSendMessage(
                     text=WELCOME_MESSAGE_1.format(user_display_name=user_display_name)

@@ -22,7 +22,7 @@ class UserRepository:
         user.conversation_id = conversation_id
         self.db.commit()
 
-    def update__accpted_terms(self, line_id: str, accepted: bool) -> None:
+    def update_accpted_terms(self, line_id: str, accepted: bool) -> None:
         """更新用戶是否接受服務條款"""
         user = self.get_user(line_id)
         user.accpted_terms = accepted
