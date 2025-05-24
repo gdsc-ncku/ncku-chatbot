@@ -6,6 +6,7 @@ from linebot.models import (
     MessageAction,
 )
 from ...config.logger import get_logger
+from ...config.line_config import line_bot_api
 from ..utils import flex_message_convert_to_json
 from ...repositories.user_repository import UserRepository
 
@@ -36,6 +37,8 @@ def create_quickreply():
 def handle_postback_event(event):
     data = event.postback.data
     user_id = event.source.user_id
+    user_profile = line_bot_api.get_profile(user_id)
+    user_display_name = user_profile.display_name
     if data == "read_terms":
         logger.info(f"User {user_id} requested to read terms.")
         return [
@@ -113,6 +116,30 @@ def handle_postback_event(event):
             TextSendMessage(text="您已經設定為校外人士身份"),
             TextSendMessage(
                 text=WELCOME_MESSAGE_AFTER_SETTING, quick_reply=create_quickreply()
+            ),
+        ]
+    elif data == "clear_conversation_id":
+        logger.info(f"User {user_id} requested to clear conversation ID.")
+        return_value = user_repository.update_conversation_id(user_id, "")
+        logger.info(f"Conversation ID cleared for user {user_id}: {return_value}")
+        return [
+            TextSendMessage(
+                text=f"逼..嗶茲..！＠清除對話紀錄成功，雖然我忘了這段時間和{user_display_name}的點點滴滴，不過我還是期待和你重新開始吧！"
+            )
+        ]
+    elif data == "reset_user":
+        logger.info(f"User {user_id} requested to reset user data.")
+        user_repository.update_conversation_id(user_id, "")
+        user_repository.update_accpted_terms(user_id, False)
+        user_repository.update_language(user_id, "zh-TW")
+        user_repository.update_roles(user_id, "visitor")
+        return [
+            TextSendMessage(text=f"已清空{user_display_name}的資料，請開始設定吧"),
+            FlexSendMessage(
+                alt_text="請閱讀服務條款",
+                contents=flex_message_convert_to_json(
+                    "flex_messages/welcome/terms.json"
+                ),
             ),
         ]
     else:
