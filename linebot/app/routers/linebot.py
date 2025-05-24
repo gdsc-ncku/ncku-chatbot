@@ -60,6 +60,9 @@ def handle_follow_event(event):
 def handle_postback_event(event):
     logger.info("收到按鈕事件")
     reply_messages = postback_service.handle_postback_event(event)
+    if not reply_messages:
+        logger.warning("未知的 postback event，可能是換 rich menu 頁面")
+        return
     postback_service.send_message(event.reply_token, reply_messages)
 
 

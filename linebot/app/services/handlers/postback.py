@@ -6,9 +6,12 @@ from linebot.models import (
     MessageAction,
 )
 from ...config.logger import get_logger
+from ...config.line_config import line_bot_api
 from ..utils import flex_message_convert_to_json
+from ...repositories.user_repository import UserRepository
 
 logger = get_logger(__name__)
+user_repository = UserRepository()
 
 WELCOME_MESSAGE_AFTER_SETTING = """👋 嗨！歡迎使用「成大 Linebot」🌳✨
 無論是校園資訊、活動查詢、選課資訊還是校內生活大小事，我都可以為你服務！
@@ -33,7 +36,11 @@ def create_quickreply():
 
 def handle_postback_event(event):
     data = event.postback.data
+    user_id = event.source.user_id
+    user_profile = line_bot_api.get_profile(user_id)
+    user_display_name = user_profile.display_name
     if data == "read_terms":
+        logger.info(f"User {user_id} requested to read terms.")
         return [
             TextSendMessage(text=f"{TERMS_MESSAGE}"),
             FlexSendMessage(
@@ -44,6 +51,8 @@ def handle_postback_event(event):
             ),
         ]
     elif data == "accept_terms":
+        logger.info(f"User {user_id} accepted terms.")
+        user_repository.update_accpted_terms(user_id, True)
         return [
             TextSendMessage(text="感謝您的回覆，接下來我們來設定您的個人資料吧！"),
             FlexSendMessage(
@@ -54,8 +63,11 @@ def handle_postback_event(event):
             ),
         ]
     elif data == "reject_terms":
+        logger.info(f"User {user_id} rejected terms.")
+        user_repository.update_accpted_terms(user_id, False)
         return [TextSendMessage(text="感謝您的回覆，如果有需要隨時可以點擊同意歐")]
     elif data == "zh-TW":
+        user_repository.update_language(user_id, "zh-TW")
         return [
             TextSendMessage(text="感謝您的回覆，接下來我們來設定您的個人資料吧！"),
             FlexSendMessage(
@@ -66,6 +78,8 @@ def handle_postback_event(event):
             ),
         ]
     elif data == "en":
+        logger.info(f"User {user_id} selected English language.")
+        user_repository.update_language(user_id, "en")
         return [
             TextSendMessage(
                 text="Thank you for your reply, let's set up your profile next!"
@@ -78,7 +92,8 @@ def handle_postback_event(event):
             ),
         ]
     elif data == "role_faculty":
-        welcome_test_message = "hahahaha"
+        logger.info(f"User {user_id} selected faculty role.")
+        user_repository.update_roles(user_id, "faculty")
         return [
             TextSendMessage(text="您已經設定為教職員身份，鵝子歡迎您！"),
             TextSendMessage(
@@ -86,19 +101,46 @@ def handle_postback_event(event):
             ),
         ]
     elif data == "role_student":
+        logger.info(f"User {user_id} selected student role.")
+        user_repository.update_roles(user_id, "student")
         return [
             TextSendMessage(text="您已經設定為學生身份，鵝子歡迎您！"),
             TextSendMessage(
                 text=WELCOME_MESSAGE_AFTER_SETTING, quick_reply=create_quickreply()
             ),
-            create_quickreply(),
         ]
     elif data == "role_visitor":
+        logger.info(f"User {user_id} selected visitor role.")
+        user_repository.update_roles(user_id, "visitor")
         return [
             TextSendMessage(text="您已經設定為校外人士身份"),
             TextSendMessage(
                 text=WELCOME_MESSAGE_AFTER_SETTING, quick_reply=create_quickreply()
             ),
         ]
+    elif data == "clear_conversation_id":
+        logger.info(f"User {user_id} requested to clear conversation ID.")
+        return_value = user_repository.update_conversation_id(user_id, "")
+        logger.info(f"Conversation ID cleared for user {user_id}: {return_value}")
+        return [
+            TextSendMessage(
+                text=f"逼..嗶茲..！＠清除對話紀錄成功，雖然我忘了這段時間和{user_display_name}的點點滴滴，不過我還是期待和你重新開始吧！"
+            )
+        ]
+    elif data == "reset_user":
+        logger.info(f"User {user_id} requested to reset user data.")
+        user_repository.update_conversation_id(user_id, "")
+        user_repository.update_accpted_terms(user_id, False)
+        user_repository.update_language(user_id, "zh-TW")
+        user_repository.update_roles(user_id, "visitor")
+        return [
+            TextSendMessage(text=f"已清空{user_display_name}的資料，請開始設定吧"),
+            FlexSendMessage(
+                alt_text="請閱讀服務條款",
+                contents=flex_message_convert_to_json(
+                    "flex_messages/welcome/terms.json"
+                ),
+            ),
+        ]
     else:
-        return [TextSendMessage(text="請選擇一個選項")]
+        logger.warning(f"Unknown postback data: {data} from user {user_id}")
