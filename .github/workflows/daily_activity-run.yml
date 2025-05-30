@@ -1,0 +1,33 @@
+name: Daily Activity Script Run
+
+on:
+    schedule:
+        - cron: '0 16 * * *'  # Runs daily at midnight UTC
+    workflow_dispatch:
+
+jobs:
+    run-daily-activity:
+        name: Run Daily Activity Script
+        runs-on: ubuntu-latest
+
+        steps:
+        -   name: Checkout repository
+            uses: actions/checkout@v4
+
+        -   name: Set up Python
+            uses: actions/setup-python@v5
+            with:
+              python-version: '3.11'
+
+        -   name: Install dependencies
+            run: |
+                pip install -r crawler/requirements.txt
+
+        -   name: Run daily activity script
+            run: python crawler_testing.py
+
+        -   name: Upload activity_result.json to remote server
+            run: |
+                curl -X POST "{secrets.UPDATE_ACT_INFO_URL}" \
+                -H "Content-Type: application/json" \
+                --data-binary @crawler/save/activity/activity_result.json

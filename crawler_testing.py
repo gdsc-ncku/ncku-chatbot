@@ -22,5 +22,5 @@ if __name__ == "__main__":
     END_STR = "=END="
 
     start_time = timer()
-    activity_crawler(URL, PATH, END_STR, max_worker=0, headless=False)
+    activity_crawler(URL, PATH, END_STR, max_worker=0, headless=True)
     diff_time(start_time, "Code")
