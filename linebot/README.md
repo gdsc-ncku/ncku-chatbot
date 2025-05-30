@@ -2,6 +2,8 @@
 
 ## Usage
 
+Make sure you have sqlite3 and redis installed on your system.
+
 1. Copy `.env.example` to `.env` and replace the values with your own
     ```cli
     cp .env.example .env
