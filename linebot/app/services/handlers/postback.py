@@ -179,7 +179,11 @@ def handle_postback_event(event):
             TextSendMessage(
                 text="以下是一些關於社團的問題範例，您可以點選其中一個來詢問我：",
                 quick_reply=create_example_question_quickreply(
-                    ["問題1", "問題2", "問題3"]
+                    [
+                        "有沒有推薦的戶外社團？",
+                        "學校有熱舞社嗎？",
+                        "成大服務性質的社團有哪些？",
+                    ]
                 ),
             )
         ]
