@@ -26,17 +26,14 @@ jobs:
         -   name: Run daily activity script
             run: python crawler_testing.py
 
-        - name: Debug file exists
-          run: ls -lh crawler/save/activity/
-
         - name: Upload activity_result.json to remote server
           run: |
-              curl -v -X POST "${{ secrets.UPDATE_ACT_INFO_URL }}?file_type=json" \
+              curl -v -X POST "${{secrets.UPDATE_ACT_INFO_URL}}?file_type=json" \
                 -F "file=@crawler/save/activity/activity_result.json"
 
         -   name: Update act_info
             run: |
-                curl -X POST ${{secrets.DIFY_BASE_URL}} \
+                curl -X POST ${{secrets.DIFY_BASE_URL}}/workflows/run \
                 --header 'Authorization: Bearer ${{secrets.UPDATE_ACT_INFO_API_KEY}}' \
                 --header 'Content-Type: application/json' \
                 --data-raw '{
