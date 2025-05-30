@@ -35,11 +35,11 @@ jobs:
 
         -   name: Update act_info
             run: |
-                curl -X POST ${{secrets.BASE_URL}} \
+                curl -X POST ${{secrets.DIFY_BASE_URL}} \
                 --header 'Authorization: Bearer ${{secrets.UPDATE_ACT_INFO_API_KEY}}' \
                 --header 'Content-Type: application/json' \
                 --data-raw '{
                     "inputs": {},
-                    "response_mode": "streaming",
+                    "response_mode": "blocking",
                 }'
 
