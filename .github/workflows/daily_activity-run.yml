@@ -37,6 +37,8 @@ jobs:
                 --header 'Authorization: Bearer ${{secrets.UPDATE_ACT_INFO_API_KEY}}' \
                 --header 'Content-Type: application/json' \
                 --data-raw '{
+                    "inputs": {},
                     "response_mode": "blocking",
+                    "user": "github"
                 }'
 
