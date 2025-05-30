@@ -49,6 +49,3 @@ jobs:
                 --form 'data={"name": "activity_result.txt", "indexing_technique": "high_quality", "process_rule": {"rules": {"pre_processing_rules": [{"id": "remove_extra_spaces", "enabled": true}, {"id": "remove_urls_emails", "enabled": false}], "segmentation": {"separator": "=END=", "max_tokens": 4000, "overlap": 0}}, "mode": "custom"}};type=application/json' \
                 --form 'file=@crawler/output/activity/activity_result.txt'
                 
-                
-            
-
