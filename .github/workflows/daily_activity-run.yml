@@ -41,6 +41,5 @@ jobs:
                 --data-raw '{
                     "inputs": {},
                     "response_mode": "streaming",
-                    "user": "${{secrets.USER_NAME}}"
                 }'
 
