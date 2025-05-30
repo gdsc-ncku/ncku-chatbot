@@ -14,6 +14,7 @@ NCKU Chatbot aims to simplify student campus life by providing instant, accurate
 ncku-chatbot/
 ├── linebot/        # LINE bot integration service
 ├── crawler/        # Web crawling scripts and n8n templates (In Development)
+├── richmenu/       # LINE rich menu configuration files 
 └── dify/           # DSL files, including prompts, LLM models, etc. (In Development)
 ```
 
