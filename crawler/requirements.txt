@@ -1,0 +1,4 @@
+selenium
+colorlog
+bs4
+requests
