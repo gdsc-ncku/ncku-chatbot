@@ -14,6 +14,7 @@ uvicorn = "^0.32.0"
 python-dotenv = "^1.0.1"
 sqlalchemy = "^2.0.36"
 openai = "^1.70.0"
+redis = "^6.2.0"
 
 
 [build-system]
