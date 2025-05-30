@@ -29,9 +29,7 @@ jobs:
         -   name: Upload activity_result.json to remote server
             run: |
                 curl -X POST ${{secrets.UPDATE_ACT_INFO_URL}} \
-                -H "Content-Type: application/json" \
-                --data-binary @crawler/save/activity/activity_result.json
-                
+                -F "file=@crawler/save/activity/activity_result.json" \
 
         -   name: Update act_info
             run: |
