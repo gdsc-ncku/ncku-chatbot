@@ -84,8 +84,6 @@ def get_knowledge_base_list():
             json.dump(response.json(), f, ensure_ascii=False, indent=4)
     except IOError as e:
         print(f"Error writing knowledge_base_list.json: {e}")
-    except requests.exceptions.JSONDecodeError:
-        print(f"Error decoding JSON from knowledge base list response: {response.text}")
 
     try:
         response.raise_for_status()
@@ -94,9 +92,6 @@ def get_knowledge_base_list():
         print(f"Error getting knowledge base list: {e}")
         if hasattr(e, "response") and e.response is not None:
             print(f"Response body: {e.response.text}")
-        return None
-    except requests.exceptions.JSONDecodeError:
-        print(f"Invalid JSON received for knowledge base list: {response.text}")
         return None
 
 
@@ -116,11 +111,6 @@ def get_knowledge_base_detail_by_id(dataset_id: str):
         print(f"Error getting knowledge base detail for ID {dataset_id}: {e}")
         if hasattr(e, "response") and e.response is not None:
             print(f"Response body: {e.response.text}")
-        return None
-    except requests.exceptions.JSONDecodeError:
-        print(
-            f"Invalid JSON received for knowledge base detail {dataset_id}: {response.text}"
-        )
         return None
 
 
@@ -146,7 +136,7 @@ def delete_document(dataset_id: str, document_id: str):
 
 def get_document_list_from_knowledge_base(
     dataset_id: str, page: int = 1, limit: int = 100
-):
+) -> dict:
     api_url = f"{URL}/datasets/{dataset_id}/documents"
     try:
         response = requests.get(
@@ -166,10 +156,7 @@ def get_document_list_from_knowledge_base(
         print(f"Error getting document list for dataset {dataset_id}: {e}")
         if hasattr(e, "response") and e.response is not None:
             print(f"Response body: {e.response.text}")
-        return None
-    except requests.exceptions.JSONDecodeError:
-        print(f"Invalid JSON received for document list {dataset_id}: {response.text}")
-        return None
+        return {"data": [], "has_more": False}
 
 
 def get_all_document_id_from_knowledge_base(dataset_id: str):
