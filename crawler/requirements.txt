@@ -3,3 +3,4 @@ colorlog
 bs4
 requests
 PyYAML
+tqdm
