@@ -15,16 +15,18 @@ with open(file_path, "rb") as f:
             "rules": {
                 "pre_processing_rules": [
                     {"id": "remove_extra_spaces", "enabled": True},
-                    {"id": "remove_urls_emails", "enabled": False}
+                    {"id": "remove_urls_emails", "enabled": False},
                 ],
                 "segmentation": {
                     "separator": "=END=",
                     "max_tokens": 4000,
-                }
+                },
             },
-            "mode": "custom"
-        }
+            "mode": "custom",
+        },
     }
     # Dify API 要求 data 必須是 JSON 字串
-    response = requests.post(url, headers=headers, files=files, data={"data": json.dumps(data)})
+    response = requests.post(
+        url, headers=headers, files=files, data={"data": json.dumps(data)}
+    )
     print(response.status_code, response.text)

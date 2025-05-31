@@ -2,9 +2,8 @@ name: Daily Activity Script Run
 
 env:
     DIFY_BASE_URL: ${{ secrets.DIFY_BASE_URL }}
-    DATASET_ID: ${{ secrets.ACTIVITY_DATASET_ID }}
-    DOCUMENT_ID: ${{ secrets.ACTIVITY_DOCUMENTS_ID }}
-    KB_API_KEY: ${{ secrets.KB_API_KEY }}
+    UPDATE_ACT_INFO_URL: ${{secrets.UPDATE_ACT_INFO_URL}}
+    UPDATE_ACT_INFO_API_KEY: ${{secrets.UPDATE_ACT_INFO_API_KEY}}
 
 on:
     schedule:
@@ -20,20 +19,17 @@ jobs:
         -   name: Checkout repository
             uses: actions/checkout@v4
 
+
         -   name: Set up Python
             uses: actions/setup-python@v5
             with:
               python-version: '3.11'
 
+
         -   name: Install dependencies
             run: |
                 pip install -r crawler/requirements.txt
 
-        -   name: Debug KB_API_KEY
-            env:
-                KB_API_KEY: ${{ secrets.KB_API_KEY }}
-            run: |
-                python -c "import os; print(repr(os.environ['KB_API_KEY']))"
 
         -   name: Run daily activity script
             run: python crawler_activity.py
@@ -42,15 +38,17 @@ jobs:
         -   name: Update activity_KB
             run: python update_activity_kb.py
 
+
         -   name: Upload activity_result.json to remote server
             run: |
-                curl -v -X POST "${{secrets.UPDATE_ACT_INFO_URL}}?file_type=json" \
+                curl -v -X POST "$UPDATE_ACT_INFO_API_KEY?file_type=json" \
                     -F "file=@crawler/save/activity/activity_result.json"
+
 
         -   name: Update act_info
             run: |
-                curl -X POST ${{secrets.DIFY_BASE_URL}}/workflows/run \
-                --header 'Authorization: Bearer ${{secrets.UPDATE_ACT_INFO_API_KEY}}' \
+                curl -X POST $DIFY_BASE_URL/workflows/run \
+                --header 'Authorization: Bearer $UPDATE_ACT_INFO_API_KEY' \
                 --header 'Content-Type: application/json' \
                 --data-raw '{
                     "inputs": {},
