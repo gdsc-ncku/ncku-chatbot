@@ -20,26 +20,31 @@ jobs:
         -   name: Checkout repository
             uses: actions/checkout@v4
 
+
         -   name: Set up Python
             uses: actions/setup-python@v5
             with:
               python-version: '3.11'
 
+
         -   name: Install dependencies
             run: |
                 pip install -r crawler/requirements.txt
 
+
         -   name: Run daily activity script
-            run: python crawler/script/activity/crawler_activity.py
+            run: python -m script.activity.crawler_activity
 
 
         -   name: Update activity_KB
-            run: python crawler/script/activity/update_activity_kb.py
+            run: python -m script.activity.update_activity_kb
+
 
         -   name: Upload activity_result.json to remote server
             run: |
                 curl -v -X POST "${{secrets.UPDATE_ACT_INFO_URL}}?file_type=json" \
                     -F "file=@crawler/save/activity/activity_result.json"
+
 
         -   name: Update act_info
             run: |
