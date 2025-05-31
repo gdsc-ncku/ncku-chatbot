@@ -1,4 +1,4 @@
-from crawler import activity_crawler
+from crawler.api import activity_crawler
 import time
 
 
