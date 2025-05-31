@@ -36,7 +36,7 @@ jobs:
             run: |
                 curl --location --request POST "$DIFY_BASE_URL/datasets/$DATASET_ID/documents/$DOCUMENT_ID/update-by-file" \
                 --header "Authorization: Bearer $KB_API_KEY" \
-                --form 'data="{"name":"activity_result.txt","indexing_technique":"high_quality","process_rule":{"rules":{"pre_processing_rules":[{"id":"remove_extra_spaces","enabled":true},{"id":"remove_urls_emails","enabled":false}],"segmentation":{"separator":"=END=","max_tokens":4000}},"mode":"custom"}}";type=text/plain' \
+                --form 'data={"name": "activity_result.txt", "indexing_technique": "high_quality", "process_rule": {"rules": {"pre_processing_rules": [{"id": "remove_extra_spaces", "enabled": true}, {"id": "remove_urls_emails", "enabled": false}], "segmentation": {"separator": "=END=", "max_tokens": 4000}}, "mode": "custom"}};type=application/json' \
                 --form "file=@crawler/output/activity/activity_result.txt"
 
         -   name: Upload activity_result.json to remote server
