@@ -30,7 +30,7 @@ with open(file_path, "rb") as f:
         },
     }
     # Dify API 要求 data 必須是 JSON 字串
-    #response = requests.post(
-    #    url, headers=headers, files=files, data={"data": json.dumps(data)}
-    #)
-    #print(response.status_code, response.text)
+    response = requests.post(
+        url, headers=headers, files=files, data={"data": json.dumps(data)}
+    )
+    print(response.status_code, response.text)
