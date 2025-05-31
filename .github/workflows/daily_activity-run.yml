@@ -30,11 +30,11 @@ jobs:
                 pip install -r crawler/requirements.txt
 
         -   name: Run daily activity script
-            run: python crawler_activity.py
+            run: python crawler/script/activity/crawler_activity.py
 
 
         -   name: Update activity_KB
-            run: python update_activity_kb.py
+            run: python crawler/script/activity/update_activity_kb.py
 
         -   name: Upload activity_result.json to remote server
             run: |

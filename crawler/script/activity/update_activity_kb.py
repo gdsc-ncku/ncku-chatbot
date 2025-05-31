@@ -3,7 +3,7 @@ import json
 import os
 
 headers = {"Authorization": f"Bearer {os.environ['KB_API_KEY'].strip()}"}
-file_path = "crawler/output/activity/activity_result.txt"
+file_path = "../../output/activity/activity_result.txt"
 url = f"{os.environ['DIFY_BASE_URL']}/datasets/{os.environ['DATASET_ID']}/documents/{os.environ['DOCUMENT_ID']}/update-by-file"
 
 with open(file_path, "rb") as f:
