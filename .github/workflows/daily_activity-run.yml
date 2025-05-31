@@ -29,8 +29,15 @@ jobs:
             run: |
                 pip install -r crawler/requirements.txt
 
+        -   name: Debug KB_API_KEY
+            env:
+                KB_API_KEY: ${{ secrets.KB_API_KEY }}
+            run: |
+                python -c "import os; print(repr(os.environ['KB_API_KEY']))"
+
         -   name: Run daily activity script
             run: python crawler_activity.py
+
 
         -   name: Update activity_KB
             run: python update_activity_kb.py
