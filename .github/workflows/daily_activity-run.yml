@@ -2,6 +2,10 @@ name: Daily Activity Script Run
 
 env:
     DIFY_BASE_URL: ${{ secrets.DIFY_BASE_URL }}
+    KB_API_KEY: ${{ secrets.KB_API_KEY }}
+
+    DATASET_ID: ${{ secrets.ACTIVITY_DATASET_ID }}
+    DOCUMENT_ID: ${{ secrets.ACTIVITY_DOCUMENTS_ID }}
     UPDATE_ACT_INFO_URL: ${{secrets.UPDATE_ACT_INFO_URL}}
     UPDATE_ACT_INFO_API_KEY: ${{secrets.UPDATE_ACT_INFO_API_KEY}}
 
