@@ -1,5 +1,11 @@
 name: Daily Activity Script Run
 
+env:
+    DIFY_BASE_URL: ${{ secrets.DIFY_BASE_URL }}
+    DATASET_ID: ${{ secrets.ACTIVITY_DATASET_ID }}
+    DOCUMENT_ID: ${{ secrets.ACTIVITY_DOCUMENTS_ID }}
+    KB_API_KEY: ${{ secrets.KB_API_KEY }}
+
 on:
     schedule:
         - cron: '0 16 * * *'  # Runs daily at midnight UTC
@@ -28,10 +34,10 @@ jobs:
 
         -   name: Update activity_KB
             run: |
-                curl --location --request POST ${{secrets.DIFY_BASE_URL}}/datasets/${{secrets.ACTIVITY_DATASET_ID}}/document/${{secrets.ACTIVITY_DOCUMENTS_ID}}/update-by-file' \
-                --header 'Authorization: Bearer ${{secrets.KB_API_KEY}}' \
+                curl --location --request POST "$DIFY_BASE_URL/datasets/$DATASET_ID/document/$DOCUMENT_ID/update-by-file" \
+                --header 'Authorization: Bearer $KB_API_KEY' \
                 --form 'data="{"name":"activity_result.txt","indexing_technique":"high_quality","process_rule":{"rules":{"pre_processing_rules":[{"id":"remove_extra_spaces","enabled":true},{"id":"remove_urls_emails","enabled":false}],"segmentation":{"separator":"=END=","max_tokens":4000}},"mode":"custom"}}";type=text/plain' \
-                --form 'file=@"crawler/output/activity/activity_result.txt"'
+                --form "file=@crawler/output/activity/activity_result.txt"
 
         -   name: Upload activity_result.json to remote server
             run: |
