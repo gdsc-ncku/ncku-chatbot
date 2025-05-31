@@ -2,8 +2,12 @@ import requests
 import json
 import os
 
+from crawler.utils import inspect_path
+
+PROEJCT_ROOT, _, _ = inspect_path()
+
 headers = {"Authorization": f"Bearer {os.environ['KB_API_KEY'].strip()}"}
-file_path = "../../crawler/output/activity/activity_result.txt"
+file_path = os.path.join(PROEJCT_ROOT, "output", "activity", "activity_result.txt")
 url = f"{os.environ['DIFY_BASE_URL']}/datasets/{os.environ['DATASET_ID']}/documents/{os.environ['DOCUMENT_ID']}/update-by-file"
 
 with open(file_path, "rb") as f:
@@ -26,7 +30,7 @@ with open(file_path, "rb") as f:
         },
     }
     # Dify API 要求 data 必須是 JSON 字串
-    response = requests.post(
-        url, headers=headers, files=files, data={"data": json.dumps(data)}
-    )
-    print(response.status_code, response.text)
+    #response = requests.post(
+    #    url, headers=headers, files=files, data={"data": json.dumps(data)}
+    #)
+    #print(response.status_code, response.text)
