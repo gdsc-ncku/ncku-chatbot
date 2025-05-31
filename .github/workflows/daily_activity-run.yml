@@ -1,5 +1,11 @@
 name: Daily Activity Script Run
 
+env:
+    DIFY_BASE_URL: ${{ secrets.DIFY_BASE_URL }}
+    DATASET_ID: ${{ secrets.ACTIVITY_DATASET_ID }}
+    DOCUMENT_ID: ${{ secrets.ACTIVITY_DOCUMENTS_ID }}
+    KB_API_KEY: ${{ secrets.KB_API_KEY }}
+
 on:
     schedule:
         - cron: '0 16 * * *'  # Runs daily at midnight UTC
@@ -14,29 +20,31 @@ jobs:
         -   name: Checkout repository
             uses: actions/checkout@v4
 
+
         -   name: Set up Python
             uses: actions/setup-python@v5
             with:
               python-version: '3.11'
 
+
         -   name: Install dependencies
             run: |
                 pip install -r crawler/requirements.txt
 
+
         -   name: Run daily activity script
-            run: python crawler_testing.py
+            run: python -m script.activity.crawler_activity
+
 
         -   name: Update activity_KB
-            run: |
-                curl --location --request POST ${{secrets.DIFY_BASE_URL}}/datasets/${{secrets.ACTIVITY_DATASET_ID}}/documents/${{secrets.ACTIVITY_DOCUMENTS_ID}}/update-by-file \
-                --header "Authorization: Bearer ${{secrets.KB_API_KEY}}" \
-                --form 'data="{\"indexing_technique\":\"high_quality\",\"process_rule\":{\"mode\":\"custom\",\"rules\":{\"pre_processing_rules\":[{\"id\":\"remove_extra_spaces\",\"enabled\":true},{\"id\":\"remove_urls_emails\",\"enabled\":false}],\"segmentation\":{\"separator\":\"=END\",\"max_tokens\":4000}}}}";type=text/plain'  \
-                --form 'file="@crawler/output/activity/activity_result.txt"'
+            run: python -m script.activity.update_activity_kb
+
 
         -   name: Upload activity_result.json to remote server
             run: |
                 curl -v -X POST "${{secrets.UPDATE_ACT_INFO_URL}}?file_type=json" \
                     -F "file=@crawler/save/activity/activity_result.json"
+
 
         -   name: Update act_info
             run: |
