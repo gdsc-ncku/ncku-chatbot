@@ -59,7 +59,7 @@ jobs:
             run: |
                 curl --location --request POST "$DIFY_BASE_URL/datasets/$DATASET_ID/documents/$DOCUMENT_ID/update-by-file" \
                 --header "Authorization: Bearer $KB_API_KEY" \
-                --form "data=@update_data.json;type=application/json" \
+                --form-string "data=$(cat update_data.json);type=application/json" \
                 --form "file=@crawler/output/activity/activity_result.txt"
         
 
