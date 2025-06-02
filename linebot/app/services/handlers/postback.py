@@ -160,7 +160,7 @@ def handle_postback_event(event):
                 text="以下是一些關於成大法規的問題範例，您可以點選其中一個來詢問我：",
                 quick_reply=create_example_question_quickreply(
                     [
-                        "如果我遇到性騷擾案件應該找誰處理？",
+                        "請告訴我成大流浪動物相關法規",
                         "宿舍違規審議小組是什麼",
                         "查詢圖書館室內空間使用規定",
                     ]
