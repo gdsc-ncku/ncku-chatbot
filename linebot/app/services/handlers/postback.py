@@ -212,7 +212,11 @@ def handle_postback_event(event):
             TextSendMessage(
                 text="以下是一些關於課程的問題範例，您可以點選其中一個來詢問我：",
                 quick_reply=create_example_question_quickreply(
-                    ["問題1", "問題2", "問題3"]
+                    [
+                        "有又甜又涼的通識嗎？",
+                        "有推薦的國文課嗎？",
+                        "成大有開設AI相關的課程嗎？",
+                    ]
                 ),
             )
         ]
