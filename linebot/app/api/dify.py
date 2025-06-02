@@ -26,11 +26,11 @@ class DifyConfig:
 
     api_key: str
     base_url: str = "https://dify-ncku-chatbot.yenslife.top/v1"
-    max_retries: int = 3
+    max_retries: int = 1
     retry_delay: float = 1.0
 
 
-def retry_on_error(max_retries: int = 3, delay: float = 1.0):
+def retry_on_error(max_retries: int = 1, delay: float = 1.0):
     """Decorator for implementing retry logic."""
 
     def decorator(func):

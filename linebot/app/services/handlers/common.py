@@ -37,7 +37,7 @@ def create_quick_reply() -> QuickReply:
     )
 
 
-def show_loading_animation(user_id, duration=5):
+def show_loading_animation(user_id, duration=60):
     """顯示 LINE Bot loading 動畫"""
     try:
         url = "https://api.line.me/v2/bot/chat/loading/start"
