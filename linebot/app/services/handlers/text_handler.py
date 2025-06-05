@@ -27,6 +27,8 @@ def handle_text_message(event):
         quick_reply = None
         if user_input in COMMANDS:
             response_text = COMMANDS[user_input]
+            if isinstance(response_text, list): # 處理 /hint 指令的多個提示
+                response_text = random.choice(response_text)
             quick_reply = create_quick_reply()
             return [TextSendMessage(text=response_text, quick_reply=quick_reply)]
 
