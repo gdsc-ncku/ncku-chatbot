@@ -156,7 +156,7 @@ def inference(query: str, line_id: str = "abc-123", files: Optional[str] = None)
         return dify_client.inference(query, line_id, files)
     except Exception as e:
         logger.error(f"Inference error: {str(e)}")
-        return "系統發生錯誤，請稍後再試"
+        return "系統發生錯誤，八成又是 Gemini 出問題了，請稍後再試 QQ"
 
 
 if __name__ == "__main__":
