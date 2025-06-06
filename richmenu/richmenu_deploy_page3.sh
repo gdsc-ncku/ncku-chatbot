@@ -91,8 +91,8 @@ CREATE_RES=$(curl -s -X POST "https://api.line.me/v2/bot/richmenu" \
         "height": 284
       },
       "action": {
-        "type": "message",
-        "text": "表單"
+        "type": "postback",
+	"data": "feedback"
       }
     },
     {
@@ -103,8 +103,8 @@ CREATE_RES=$(curl -s -X POST "https://api.line.me/v2/bot/richmenu" \
         "height": 297
       },
       "action": {
-        "type": "message",
-        "text": "服務條款"
+        "type": "postback",
+        "data": "show_terms"
       }
     },
     {
@@ -115,8 +115,8 @@ CREATE_RES=$(curl -s -X POST "https://api.line.me/v2/bot/richmenu" \
         "height": 305
       },
       "action": {
-        "type": "message",
-        "text": "問號"
+        "type": "postback",
+        "data": "hint"
       }
     },
     {
