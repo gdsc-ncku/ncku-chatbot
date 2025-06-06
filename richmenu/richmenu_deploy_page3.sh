@@ -2,10 +2,10 @@
 
 # ======= 使用者設定 =======
 ACCESS_TOKEN=$LINE_ACCESS_TOKEN
-ALIAS_ID="richmenu-alias-page1"
-IMAGE_PATH="images/page1.png"
-CHATBAR_TEXT="點我會有驚喜歐！😎"
-RICHMENU_NAME="page1"
+ALIAS_ID="richmenu-alias-page3"
+IMAGE_PATH="images/page3.png"
+CHATBAR_TEXT="喜歡的話，請追蹤我們的粉專🫶"
+RICHMENU_NAME="page3"
 # ==========================
 
 echo "[1] 從 list 找出 name 為 ${RICHMENU_NAME} 的 rich menu..."
@@ -49,17 +49,33 @@ CREATE_RES=$(curl -s -X POST "https://api.line.me/v2/bot/richmenu" \
   -H "Authorization: Bearer $ACCESS_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "size": { "width": 2500, "height": 1686 },
-    "selected": true,
-    "name": "'"$RICHMENU_NAME"'",
-    "chatBarText": "'"$CHATBAR_TEXT"'",
+  "size": {
+    "width": 2500,
+    "height": 1686
+  },
+  "selected": true,
+  "name": "page3",
+  "chatBarText": "查看更多資訊",
   "areas": [
     {
       "bounds": {
-        "x": 1036,
+        "x": 0,
+        "y": 21,
+        "width": 1003,
+        "height": 280
+      },
+      "action": {
+        "type": "richmenuswitch",
+        "richMenuAliasId": "richmenu-alias-page1",
+        "data": "richmenu-changed-to-page1"
+      }
+    },
+    {
+      "bounds": {
+        "x": 1044,
         "y": 29,
-        "width": 1010,
-        "height": 272
+        "width": 978,
+        "height": 256
       },
       "action": {
         "type": "richmenuswitch",
@@ -69,39 +85,62 @@ CREATE_RES=$(curl -s -X POST "https://api.line.me/v2/bot/richmenu" \
     },
     {
       "bounds": {
-        "x": 2067,
-        "y": 29,
+        "x": 1316,
+        "y": 380,
+        "width": 821,
+        "height": 284
+      },
+      "action": {
+        "type": "message",
+        "text": "表單"
+      }
+    },
+    {
+      "bounds": {
+        "x": 1308,
+        "y": 846,
+        "width": 837,
+        "height": 297
+      },
+      "action": {
+        "type": "message",
+        "text": "服務條款"
+      }
+    },
+    {
+      "bounds": {
+        "x": 1287,
+        "y": 1312,
+        "width": 879,
+        "height": 305
+      },
+      "action": {
+        "type": "message",
+        "text": "問號"
+      }
+    },
+    {
+      "bounds": {
+        "x": 433,
+        "y": 598,
         "width": 433,
-        "height": 264
+        "height": 454
       },
       "action": {
-        "type": "richmenuswitch",
-	"richMenuAliasId": "richmenu-alias-page3",
-	"data": "richmenu-changed-to-page3"
+        "type": "uri",
+        "uri": "https://www.instagram.com/gdg.ncku/"
       }
     },
     {
       "bounds": {
-        "x": 124,
-        "y": 776,
-        "width": 1068,
-        "height": 449
+        "x": 429,
+        "y": 1122,
+        "width": 425,
+        "height": 446
       },
       "action": {
-        "type": "postback",
-	"data": "clear_conversation_id"
-      }
-    },
-    {
-      "bounds": {
-        "x": 1300,
-        "y": 759,
-        "width": 1093,
-        "height": 458
-      },
-      "action": {
-        "type": "postback",
-	"data": "reset_user"
+        "type": "uri",
+        "uri": "https://www.facebook.com/nckugdgoncampus/"
       }
     }
   ]

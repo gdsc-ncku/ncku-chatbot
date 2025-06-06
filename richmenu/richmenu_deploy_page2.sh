@@ -150,8 +150,9 @@ CREATE_RES=$(curl -s -X POST "https://api.line.me/v2/bot/richmenu" \
         "height": 276
       },
       "action": {
-        "type": "message",
-        "text": "🚧 尚未施工完畢，敬請期待！ 🚧"
+        "type": "richmenuswitch",
+	"richMenuAliasId": "richmenu-alias-page3",
+	"data": "richmenu-changed-to-page3"
       }
     }
   ]
