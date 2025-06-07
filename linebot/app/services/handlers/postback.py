@@ -23,7 +23,7 @@ WELCOME_MESSAGE_AFTER_SETTING = """👋 嗨！歡迎使用「成大 Linebot」�
 TERMS_MESSAGE = """📜 服務條款
     NCKU Chatbot 的回覆基於現有資料與自然語言處理技術，可能存在誤差或未能即時更新的情況。使用者應自行判斷回覆內容的準確性，並以學校官方公告與相關單位提供的資訊為準。本服務不對因使用 NCKU Chatbot 所產生的任何後果負責。
 
-    我們的資料涵蓋到「宿舍」「社團」「學校活動」「課程」「常見行政手續」「成大法規彙編」等七大主題。請注意，本服務僅提供輔助資訊，具體內容仍應以學校官方公告為準。使用者在使用本服務時，應遵守學校相關規定與法律法規，並對自己的行為負責。"""
+    我們的資料涵蓋到「宿舍」「社團」「學校活動」「課程」「常見行政手續」「成大法規彙編」等六大主題。請注意，本服務僅提供輔助資訊，具體內容仍應以學校官方公告為準。使用者在使用本服務時，應遵守學校相關規定與法律法規，並對自己的行為負責。"""
 
 
 def create_quickreply():
@@ -229,6 +229,11 @@ def handle_postback_event(event):
                     ["機車證申請方式?", "學費申請流程?", "新生資料表填寫?"]
                 ),
             )
+        ]
+    elif data == "show_terms":
+        logger.info(f"User {user_id} requested to show terms.")
+        return [
+            TextSendMessage(text=f"{TERMS_MESSAGE}"),
         ]
     else:
         logger.warning(f"Unknown postback data: {data} from user {user_id}")
