@@ -9,6 +9,7 @@ from ...config.logger import get_logger
 from ...config.line_config import line_bot_api
 from ..utils import flex_message_convert_to_json
 from ...repositories.user_repository import UserRepository
+from .common import create_quick_reply
 
 logger = get_logger(__name__)
 user_repository = UserRepository()
@@ -24,15 +25,6 @@ TERMS_MESSAGE = """📜 服務條款
     NCKU Chatbot 的回覆基於現有資料與自然語言處理技術，可能存在誤差或未能即時更新的情況。使用者應自行判斷回覆內容的準確性，並以學校官方公告與相關單位提供的資訊為準。本服務不對因使用 NCKU Chatbot 所產生的任何後果負責。
 
     我們的資料涵蓋到「宿舍」「社團」「學校活動」「課程」「常見行政手續」「成大法規彙編」等六大主題。請注意，本服務僅提供輔助資訊，具體內容仍應以學校官方公告為準。使用者在使用本服務時，應遵守學校相關規定與法律法規，並對自己的行為負責。"""
-
-
-def create_quickreply():
-    return QuickReply(
-        items=[
-            QuickReplyButton(action=MessageAction(label="說明", text="/help")),
-            QuickReplyButton(action=MessageAction(label="設定", text="/setup")),
-        ]
-    )
 
 
 def create_example_question_quickreply(questions: list[str]):
@@ -107,7 +99,7 @@ def handle_postback_event(event):
         return [
             TextSendMessage(text="您已經設定為教職員身份，鵝子歡迎您！"),
             TextSendMessage(
-                text=WELCOME_MESSAGE_AFTER_SETTING, quick_reply=create_quickreply()
+                text=WELCOME_MESSAGE_AFTER_SETTING, quick_reply=create_quick_reply()
             ),
         ]
     elif data == "role_student":
@@ -116,7 +108,7 @@ def handle_postback_event(event):
         return [
             TextSendMessage(text="您已經設定為學生身份，鵝子歡迎您！"),
             TextSendMessage(
-                text=WELCOME_MESSAGE_AFTER_SETTING, quick_reply=create_quickreply()
+                text=WELCOME_MESSAGE_AFTER_SETTING, quick_reply=create_quick_reply()
             ),
         ]
     elif data == "role_visitor":
@@ -125,7 +117,7 @@ def handle_postback_event(event):
         return [
             TextSendMessage(text="您已經設定為校外人士身份"),
             TextSendMessage(
-                text=WELCOME_MESSAGE_AFTER_SETTING, quick_reply=create_quickreply()
+                text=WELCOME_MESSAGE_AFTER_SETTING, quick_reply=create_quick_reply()
             ),
         ]
     elif data == "clear_conversation_id":
