@@ -91,8 +91,8 @@ CREATE_RES=$(curl -s -X POST "https://api.line.me/v2/bot/richmenu" \
         "height": 284
       },
       "action": {
-        "type": "postback",
-	"data": "feedback"
+        "type": "uri",
+        "uri": "https://docs.google.com/forms/d/e/1FAIpQLSdirn7nRTPRU7wlNiQg2QeyfiDthF8tqwwr9NdkyKHXcNuauw/viewform?usp=header"
       }
     },
     {
@@ -115,8 +115,8 @@ CREATE_RES=$(curl -s -X POST "https://api.line.me/v2/bot/richmenu" \
         "height": 305
       },
       "action": {
-        "type": "postback",
-        "data": "hint"
+        "type": "uri",
+        "uri": "https://github.com/gdsc-ncku/ncku-chatbot/"
       }
     },
     {
