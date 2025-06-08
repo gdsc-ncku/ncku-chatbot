@@ -4,6 +4,10 @@
 
 A smart chatbot assistant designed specifically for National Cheng Kung University (NCKU) students, powered by Dify and integrated with LINE messaging platform.
 
+Line ID: @283aixtg
+
+![QR code](https://github.com/user-attachments/assets/5aae324f-57a4-45ce-9452-d8743b0fb99b)
+
 ## Overview
 
 NCKU Chatbot aims to simplify student campus life by providing instant, accurate responses to inquiries about course selection, dormitory information, and campus activities. Built on Dify's powerful LLM development platform, it delivers a natural conversational experience similar to talking with a senior student familiar with campus affairs.
